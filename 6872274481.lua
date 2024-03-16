@@ -2794,6 +2794,7 @@ runFunction(function()
 	local groundtime = tick()
 	local onground = false
 	local lastonground = false
+    local FlyHeatseeker = {Enabled = false}
 	local alternatelist = {"Normal", "AntiCheat A", "AntiCheat B"}
 
 	local function inflateBalloon()
@@ -2818,6 +2819,18 @@ runFunction(function()
                     task.wait(0.15)
                     FlySpeed.Value = oflyspeed
                     oflyspeed = FlySpeed.Value
+                end)
+
+                task.spawn(function()
+                    if FlyHeatseeker.Enabled then
+                        repeat task.wait(0.8)
+                            oflyspeed2 = SpeedValue.Value
+                            FlySpeed.Value = 44
+                            task.wait(0.12)
+                            FlySpeed.Value = oflyspeed2
+                            oflyspeed2 = FlySpeed.Value
+                        until not Fly.Enabled or not FlyHeatseeker.Enabled
+                    end
                 end)
 				olddeflate = bedwars.BalloonController.deflateBalloon
 				bedwars.BalloonController.deflateBalloon = function() end
@@ -2984,6 +2997,11 @@ runFunction(function()
 		ExtraText = function() 
 			return "Heatseeker"
 		end
+	})
+    FlyHeatseeker = Fly.CreateToggle({
+		Name = "Heatseeker",
+		Function = function() end, 
+		Default = true
 	})
 	FlySpeed = Fly.CreateSlider({
 		Name = "Speed",

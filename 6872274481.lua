@@ -21,6 +21,8 @@ local vapeEvents = setmetatable({}, {
 local vapeTargetInfo = shared.VapeTargetInfo
 local vapeInjected = true
 
+local avoidBugThing
+
 local bedwars = {}
 local bedwarsStore = {
 	attackReach = 0,
@@ -3716,6 +3718,7 @@ runFunction(function()
                                         local modTPos=Vector3.new(tPos.X,chrPos.Y,tPos.Z)
                                         local newCF=CFrame.new(chrPos,modTPos)
                                         lplr.Character:SetPrimaryPartCFrame(newCF)
+                                        local avoidBugThing = true
 									else
 										Neck.C0 = CFrame.new(originalNeckC0)
 										RootC0.C0 = CFrame.new(originalRootC0)
@@ -9312,9 +9315,11 @@ runFunction(function()
 			if callback then
                 task.spawn(function()
                     repeat task.wait()
-                        local TPREntity = EntityNearPosition(TeleportReachRange.Value)
-                        if TPREntity then
-                            entityLibrary.character.HumanoidRootPart.CFrame = CFrame.new(TPREntity.Character.HumanoidRootPart.Position)
+                        if not avoidBugThing then
+                            local TPREntity = EntityNearPosition(TeleportReachRange.Value)
+                            if TPREntity then
+                                entityLibrary.character.HumanoidRootPart.CFrame = CFrame.new(TPREntity.Character.HumanoidRootPart.Position)
+                            end
                         end
                     until (not TeleportReach.Enabled)
                 end)

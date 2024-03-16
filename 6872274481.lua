@@ -4852,7 +4852,7 @@ runFunction(function()
                         task.wait(0.12)
                         SpeedValue.Value = oSpeed
                         oSpeed = SpeedValue.Value
-                    until not callback
+                    until not Speed.Enabled
                 end)
 
 				table.insert(Speed.Connections, vapeEvents.EntityDamageEvent.Event:Connect(function(damageTable)

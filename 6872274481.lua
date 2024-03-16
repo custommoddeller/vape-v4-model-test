@@ -9344,6 +9344,7 @@ runFunction(function()
 		Function = function(callback)
 			if callback then
                 task.spawn(function()
+                    task.wait(2)
                     if game:GetService("RunService"):IsStudio() then wait(5) end
 
                     function startFunc()
@@ -9395,10 +9396,6 @@ runFunction(function()
                         
                         repeat task.wait() 
                             --
-
-                            if oldRoot.Velocity.magnitude >= 0.0001 then
-                                oldRoot.Velocity = Vector3.zero
-                            end
                             oldRoot.Rotation = Vector3.new(clone.Rotation.X, clone.Rotation.Y, clone.Rotation.Z)
                             if entity.character.HumanoidStateType == Enum.HumanoidStateType.Landed then
                                 

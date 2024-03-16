@@ -2989,24 +2989,24 @@ runFunction(function()
 			return "Heatseeker"
 		end
 	})
+    FlySpeedBoost = Fly.Toggle({
+		Name = "Speed Boost",
+		Function = function(callback)
+            if callback then
+                if FlySpeed.Object then 
+                    FlySpeed.Object.Visible = callback
+                end
+            end
+        end, 
+		Default = false
+        HoverText = "Speeds up fly for 0.2s"
+	})
 	FlySpeed = Fly.CreateSlider({
 		Name = "Speed",
 		Min = 1,
 		Max = 23,
-		Function = function(callback) 
-            if callback then
-                if FlySpeedBoost.Object then 
-                    FlySpeedBoost.Object.Visible = callback
-                end
-            end
-        end, 
-		Default = 23
-	})
-    FlySpeedBoost = Fly.Toggle({
-		Name = "Speed Boost",
 		Function = function(val) end, 
-		Default = false
-        HoverText = "Speeds up fly for 0.2s"
+		Default = 23
 	})
 	FlySpeedBoostValue = Fly.CreateSlider({
 		Name = "Boost",

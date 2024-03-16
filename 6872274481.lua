@@ -2794,7 +2794,6 @@ runFunction(function()
 	local groundtime = tick()
 	local onground = false
 	local lastonground = false
-    local FlySpeedBoostValue = {Value = 75}
 	local alternatelist = {"Normal", "AntiCheat A", "AntiCheat B"}
 
 	local function inflateBalloon()
@@ -2814,11 +2813,9 @@ runFunction(function()
 		Function = function(callback)
 			if callback then
                 task.spawn(function()
-                    oflyspeed = FlySpeed.Value
-                    FlySpeed.Value = FlySpeedBoostValue.Value
-                    task.wait(0.2)
-                    FlySpeed.Value = oflyspeed
-                    oflyspeed = FlySpeed.Value
+                    FlySpeed.Value = 75
+                    task.wait()
+                    FlySpeed.Value = 23
                 end)
 				olddeflate = bedwars.BalloonController.deflateBalloon
 				bedwars.BalloonController.deflateBalloon = function() end

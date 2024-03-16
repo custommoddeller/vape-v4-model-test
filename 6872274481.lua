@@ -2991,13 +2991,7 @@ runFunction(function()
 	})
     FlySpeedBoost = Fly.Toggle({
 		Name = "Speed Boost",
-		Function = function(callback)
-            if callback then
-                if FlySpeed.Object then 
-                    FlySpeed.Object.Visible = callback
-                end
-            end
-        end, 
+		Function = function() return end, 
 		Default = false
         HoverText = "Speeds up fly for 0.2s"
 	})

@@ -9882,7 +9882,7 @@ runFunction(function()
     })
 end)
 
-runFunction(function()
+--[[runFunction(function()
     local TeleportJump = {Enabled = false}
     local TeleportJumpSpeed = {Value = 15}
     TeleportJump = GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton({
@@ -9907,9 +9907,9 @@ runFunction(function()
 		Default = 15,
 		Function = function() return end
 	})
-end)
+end)--]]
 
-runFunction(function()
+--[[runFunction(function()
     local ReachTP = {Enabled = false}
     local ReachTPVal = {Value = 5}
     ReachTP = GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton({
@@ -9930,7 +9930,7 @@ runFunction(function()
 		Default = 5,
 		Function = function() return end
 	})
-end)
+end)--]]
 
 runFunction(function()
 	bedwarsStore.TPString = shared.vapeoverlay or nil

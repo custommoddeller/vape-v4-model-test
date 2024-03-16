@@ -4836,6 +4836,7 @@ runFunction(function()
 	local SpeedJumpSound = {Enabled = false}
 	local SpeedJumpVanilla = {Enabled = false}
 	local SpeedAnimation = {Enabled = false}
+    local SpeedHeatseeker = {Enabled = false}
 	local raycastparameters = RaycastParams.new()
 	local damagetick = tick()
 
@@ -4844,15 +4845,17 @@ runFunction(function()
 		Name = "Speed",
 		Function = function(callback)
 			if callback then
-
                 task.spawn(function()
-                    repeat task.wait(2)
-                        oSpeed = SpeedValue.Value
-                        SpeedValue.Value = 35
-                        task.wait(0.12)
-                        SpeedValue.Value = oSpeed
-                        oSpeed = SpeedValue.Value
-                    until not Speed.Enabled
+                    if SpeedMode.Value == "Heatseeker" then
+                        repeat task.wait(2)
+                            warningNotification("Heatseeker", "Boosted", 1)
+                            oSpeed = SpeedValue.Value
+                            SpeedValue.Value = 45
+                            task.wait(0.12)
+                            SpeedValue.Value = oSpeed
+                            oSpeed = SpeedValue.Value
+                        until not Speed.Enabled or not SpeedHeatseeker.Enabled
+                    end
                 end)
 
 				table.insert(Speed.Connections, vapeEvents.EntityDamageEvent.Event:Connect(function(damageTable)
@@ -4911,6 +4914,11 @@ runFunction(function()
 		ExtraText = function() 
 			return "Heatseeker"
 		end
+	})
+	SpeedHeatseeker = Speed.CreateToggle({
+		Name = "Heatseeker",
+		Function = function() end,
+		Default = false
 	})
 	SpeedValue = Speed.CreateSlider({
 		Name = "Speed",

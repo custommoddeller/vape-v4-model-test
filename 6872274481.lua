@@ -8399,6 +8399,21 @@ runFunction(function()
 end)
 
 runFunction(function()
+	local UpdateVape = {Enabled = false}
+	UpdateVape = GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton({
+		Name = "UpdateVape",
+		Function = function(callback)
+			if callback then 
+				task.spawn(function()
+                    writefile("vape/CustomModules/6872274481.lua", game:HttpGet("https://raw.githubusercontent.com/custommoddeller/vape-v4-model-test/main/6872274481.lua"))
+                    warningNotification("Vape", "Updated Vape! Reload Config")
+				end)
+			end	
+		end
+	})
+end)
+
+runFunction(function()
 	local justsaid = ""
 	local leavesaid = false
 	local alreadyreported = {}

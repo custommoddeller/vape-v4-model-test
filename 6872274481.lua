@@ -2989,7 +2989,7 @@ runFunction(function()
 			return "Heatseeker"
 		end
 	})
-    FlySpeedBoost = Fly.Toggle({
+    FlySpeedBoost = Fly.CreateToggle({
 		Name = "Speed Boost",
 		Function = function() return end, 
 		Default = false

@@ -2820,7 +2820,6 @@ runFunction(function()
                         FlySpeed.Value = FlySpeedBoostValue.Value
                         for i = 1, FlySpeed.Value - oflyspeed.Value do
                             FlySpeed.Value -= 1
-                            task.wait(FlySpeed.Value / oflyspeed.Value / 100)
                         end
                         FlySpeed.Value = oflyspeed
                         oflyspeed = FlySpeed.Value

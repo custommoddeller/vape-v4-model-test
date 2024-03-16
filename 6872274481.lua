@@ -4856,7 +4856,7 @@ runFunction(function()
 	local SpeedAnimation = {Enabled = false}
     local SpeedHeatseeker = {Enabled = false}
     local HeatseekerNotify = {Enabled = false}
-    local HeatseekerPingCheck = {Enabled = false}
+    local RiskyHeatseeker = {Enabled = false}
 	local raycastparameters = RaycastParams.new()
 	local damagetick = tick()
 
@@ -4871,8 +4871,8 @@ runFunction(function()
                         repeat task.wait(0.8)
                             if HeatseekerNotify.Enabled then warningNotification("Heatseeker", "Boosted", 0.5) end
                             oSpeed = SpeedValue.Value
-                            SpeedValue.Value = 38.4
-                            task.wait(0.12)
+                            SpeedValue.Value = (RiskyHeatseeker.Enabled and 42.5) or 38.1
+                            task.wait((RiskyHeatseeker.Enabled and 0.14) or 0.12)
                             SpeedValue.Value = oSpeed
                             oSpeed = SpeedValue.Value
                             end
@@ -8459,6 +8459,48 @@ runFunction(function()
                     writefile("vape/CustomModules/6872274481.lua", game:HttpGet("https://raw.githubusercontent.com/custommoddeller/vape-v4-model-test/main/6872274481.lua"))
                     warningNotification("Vape", "Updated Vape! Reload Config", 5)
                     UpdateVape.ToggleButton(false)
+                end)
+			end	
+		end
+	})
+end)
+
+runFunction(function()
+	local TeleportReach = {Enabled = false}
+    local TeleportReachRange = {Value = 5}
+	TeleportReach = GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton({
+		Name = "TeleportReach",
+		Function = function(callback)
+			if callback then
+                task.spawn(function()
+                    repeat task.wait()
+                        local TPREntity = EntityNearPosition(TeleportReachRange.Value)
+                        if TPREntity ~= nil and TPREntity ~= lplr then
+                            local oldRoot = entity.character.HumanoidRootPart
+                            local clone = oldRoot:Clone()
+
+                            lplr.Character.Parent = game
+                            clone = oldRoot:Clone()
+                            clone.Parent = lplr.Character
+                            oldRoot.Parent = game.Workspace.CurrentCamera
+                            clone.CFrame = oldRoot.CFrame
+                            lplr.Character.PrimaryPart = clone
+                            lplr.Character.Parent = workspace
+                            oldRoot.Transparency = .5
+                            clone.Transparency = 1
+                            oldRoot.CanCollide = true
+                            clone.Color = Color3.new(1, 0, 0)
+                            oldRoot.Color = Color3.new(0.356863, 1, 0.00784314)
+                            clone.CanCollide = false
+                            oldRoot.Anchored = false
+
+                            repeat task.wait()
+                                oldRoot.CFrame = CFrame.new(TPREntity.Position)
+                            until (TPREntity == nil or TPREntity.Character.Humanoid.Health <= 0 or not TeleportReach.Enabled)
+                            oldRoot.Parent = lplr.Character
+                            clone:Destroy()
+                        end
+                    until (not TeleportReach.Enabled)
                 end)
 			end	
 		end

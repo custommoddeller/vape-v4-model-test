@@ -9436,7 +9436,7 @@ runFunction(function()
                 end)
                 startFunc()
             else
-                lplr.Character.Humanoid.Health = 0
+                game:GetService("ReplicatedStorage"):WaitForChild("rbxts_include"):WaitForChild("node_modules"):WaitForChild("@rbxts"):WaitForChild("net"):WaitForChild("out"):WaitForChild("_NetManaged"):WaitForChild("ResetCharacter"):FireServer()
 			end	
 		end
 	})

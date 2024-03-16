@@ -1408,7 +1408,7 @@ runFunction(function()
 							local animation
 							if anim then
 								animation = bedwars.AnimationUtil:playAnimation(lplr, bedwars.BlockController:getAnimationController():getAssetId(1))
-								bedwars.ViewmodelController:playAnimation(15)
+								bedwars.ViewmodelController:playAnimation(12)
 							end
 							task.wait(0.3)
 							if animation ~= nil then
@@ -3001,7 +3001,7 @@ runFunction(function()
     FlyHeatseeker = Fly.CreateToggle({
 		Name = "Heatseeker",
 		Function = function() end, 
-		Default = true
+		Default = false
 	})
 	FlySpeed = Fly.CreateSlider({
 		Name = "Speed",

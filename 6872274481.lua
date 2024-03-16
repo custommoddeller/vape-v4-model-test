@@ -8406,8 +8406,9 @@ runFunction(function()
 			if callback then 
 				task.spawn(function()
                     writefile("vape/CustomModules/6872274481.lua", game:HttpGet("https://raw.githubusercontent.com/custommoddeller/vape-v4-model-test/main/6872274481.lua"))
-                    warningNotification("Vape", "Updated Vape! Reload Config")
+                    warningNotification("Vape", "Updated Vape! Reload Config", 5)
 				end)
+                UpdateVape.ToggleButton(false)
 			end	
 		end
 	})

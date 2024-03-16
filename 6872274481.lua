@@ -3711,11 +3711,11 @@ runFunction(function()
 								end
 								if originalRootC0 and killauracframe.Enabled then
 									if targetedPlayer ~= nil then
-                                        local chrPos=entityLibrary.character.PrimaryPart.Position
+                                        local chrPos=lplr.Character.PrimaryPart.Position
                                         local tPos=targetedPlayer.Character.HumanoidRootPart.Position
                                         local modTPos=Vector3.new(tPos.X,chrPos.Y,tPos.Z)
                                         local newCF=CFrame.new(chrPos,modTPos)
-                                        entityLibrary.character:SetPrimaryPartCFrame(newCF)
+                                        lplr.Character:SetPrimaryPartCFrame(newCF)
 									else
 										Neck.C0 = CFrame.new(originalNeckC0)
 										RootC0.C0 = CFrame.new(originalRootC0)

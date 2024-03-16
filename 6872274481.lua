@@ -1408,7 +1408,7 @@ runFunction(function()
 							local animation
 							if anim then
 								animation = bedwars.AnimationUtil:playAnimation(lplr, bedwars.BlockController:getAnimationController():getAssetId(1))
-								bedwars.ViewmodelController:playAnimation(9)
+								bedwars.ViewmodelController:playAnimation(17)
 							end
 							task.wait(0.3)
 							if animation ~= nil then

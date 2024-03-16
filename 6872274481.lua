@@ -9307,6 +9307,7 @@ end)
 runFunction(function()
 	local TeleportReach = {Enabled = false}
     local TeleportReachRange = {Value = 5}
+    local gotEntity = false
 	TeleportReach = GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton({
 		Name = "TeleportReach",
 		Function = function(callback)
@@ -9315,34 +9316,17 @@ runFunction(function()
                     repeat task.wait()
                         local TPREntity = EntityNearPosition(TeleportReachRange.Value)
                         if TPREntity ~= nil and TPREntity ~= lplr then
-                            local oldRoot = lplr.Character.HumanoidRootPart
-                            local clone = oldRoot:Clone()
-
-                            lplr.Character.Parent = game
-                            clone = oldRoot:Clone()
-                            clone.Parent = lplr.Character
-                            oldRoot.Parent = game.Workspace.CurrentCamera
-                            clone.CFrame = oldRoot.CFrame
-                            lplr.Character.PrimaryPart = clone
-                            lplr.Character.Parent = workspace
-                            oldRoot.Transparency = .5
-                            clone.Transparency = 1
-                            oldRoot.CanCollide = true
-                            clone.Color = Color3.new(1, 0, 0)
-                            oldRoot.Color = Color3.new(0.356863, 1, 0.00784314)
-                            clone.CanCollide = false
-                            oldRoot.Anchored = false
-
+                            gotEntity = true
+                            if gotEntity then
+                                gotEntity = false
+                                local attackedAtPos = entityLibrary.character.HumanoidRootPart.CFrame
+                            end
                             repeat task.wait()
-                                oldRoot.CFrame = CFrame.new(TPREntity.Position)
-                            until (TPREntity == nil or TPREntity.Character.Humanoid.Health <= 0 or not TeleportReach.Enabled or (EntityNearPosition(18) == nil))
-                            if not oldRoot or not oldRoot.Parent then return end
-                            lplr.Character.Parent = game
-                            oldRoot.Parent = lplr.Character
-                            lplr.Character.PrimaryPart = oldRoot
-                            lplr.Character.Parent = workspace
-                            oldRoot.CanCollide = true
-                            clone:Destroy()
+                                entityLibrary.character.HumanoidRootPart.CFrame = CFrame.new(TPREntity.Position)
+                            until (TPREntity == nil or TPREntity.Character.Humanoid.Health <= 0 or not TeleportReach.Enabled or (EntityNearPosition(18) == nil) or not entity:isAlive())
+                            if (entityLibrary.character.HumanoidRootPart.Position - attackedAtPos).magnitude < 10 then
+                                entityLibrary.character.HumanoidRootPart.CFrame = attackedAtPos
+                            end
                         end
                     until (not TeleportReach.Enabled)
                 end)

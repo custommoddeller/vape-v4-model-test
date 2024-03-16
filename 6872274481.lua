@@ -9319,11 +9319,11 @@ runFunction(function()
                             gotEntity = true
                             if gotEntity then
                                 gotEntity = false
-                                local attackedAtPos = entityLibrary.character.HumanoidRootPart.CFrame
+                                local attackedAtPos = entityLibrary.character.HumanoidRootPart.Position
                             end
                             repeat task.wait()
                                 entityLibrary.character.HumanoidRootPart.CFrame = CFrame.new(TPREntity.Position)
-                            until (TPREntity == nil or TPREntity.Character.Humanoid.Health <= 0 or not TeleportReach.Enabled or (EntityNearPosition(18) == nil) or not entity:isAlive())
+                            until (TPREntity == nil or not TeleportReach.Enabled or (EntityNearPosition(18) == nil) or not entity:isAlive())
                             if (entityLibrary.character.HumanoidRootPart.Position - attackedAtPos).magnitude < 10 then
                                 entityLibrary.character.HumanoidRootPart.CFrame = attackedAtPos
                             end

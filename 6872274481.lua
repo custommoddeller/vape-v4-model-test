@@ -2992,6 +2992,12 @@ runFunction(function()
 			return "Heatseeker"
 		end
 	})
+    --[[FlySpeedBoost = Fly.CreateToggle({
+		Name = "Speed Boost",
+		Function = function() return end, 
+		Default = false
+        HoverText = "Speeds up fly for 0.2s"
+	})--]]
 	FlySpeed = Fly.CreateSlider({
 		Name = "Speed",
 		Min = 1,
@@ -2999,13 +3005,13 @@ runFunction(function()
 		Function = function(val) end, 
 		Default = 23
 	})
-    FlySpeedBoostValue = Fly.CreateSlider({
+	--[[FlySpeedBoostValue = Fly.CreateSlider({
 		Name = "Boost",
-		Min = 16,
-		Max = 150,
+		Min = 1,
+		Max = 120,
 		Function = function(val) end, 
-		Default = 75
-	})
+		Default = 45
+	})--]]
 	FlyVerticalSpeed = Fly.CreateSlider({
 		Name = "Vertical Speed",
 		Min = 1,

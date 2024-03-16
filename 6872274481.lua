@@ -2816,23 +2816,15 @@ runFunction(function()
 		Function = function(callback)
 			if callback then
                 task.spawn(function()
-                    if not fly.Enabled then return end
                     oflyspeed = FlySpeed.Value
-                    if not fly.Enabled then return end
                     FlySpeed.Value = 55
-                    if not fly.Enabled then return end
                     task.wait(0.11)
-                    if not fly.Enabled then return end
                     FlySpeed.Value = oflyspeed
-                    if not fly.Enabled then return end
                     oflyspeed = FlySpeed.Value
-                    if not fly.Enabled then return end
                     task.wait(2)
-                    if not fly.Enabled then return end
+                    if not Fly.Enabled then return end
                     FlySpeed.Value = 55
-                    if not fly.Enabled then return end
                     task.wait(0.11)
-                    if not fly.Enabled then return end
                     FlySpeed.Value = oflyspeed
                 end)
 

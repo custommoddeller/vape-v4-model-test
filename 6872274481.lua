@@ -9333,6 +9333,13 @@ runFunction(function()
 			end	
 		end
 	})
+    TeleportReachRange = TeleportReach.CreateSlider({
+		Name = "Range",
+		Min = 5,
+		Max = 24,
+		Default = 13,
+		Function = function(val) end,
+	})
 end)
 
 runFunction(function()

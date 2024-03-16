@@ -4850,8 +4850,8 @@ runFunction(function()
                         repeat task.wait(2)
                             warningNotification("Heatseeker", "Boosted", 1)
                             oSpeed = SpeedValue.Value
-                            SpeedValue.Value = 45
-                            task.wait(0.12)
+                            SpeedValue.Value = 50
+                            task.wait(0.09)
                             SpeedValue.Value = oSpeed
                             oSpeed = SpeedValue.Value
                         until not Speed.Enabled or not SpeedHeatseeker.Enabled

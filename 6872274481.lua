@@ -4871,8 +4871,16 @@ runFunction(function()
                         repeat task.wait(0.8)
                             if HeatseekerNotify.Enabled then warningNotification("Heatseeker", "Boosted", 0.5) end
                             oSpeed = SpeedValue.Value
-                            SpeedValue.Value = (RiskyHeatseeker.Enabled and 42.5) or 38.1
-                            task.wait((RiskyHeatseeker.Enabled and 0.14) or 0.12)
+                            if RiskyHeatseeker.Enabled then
+                                SpeedValue.Value = 38.1
+                            else
+                                SpeedValue.Value = 42.7
+                            end
+                            if RiskyHeatseeker.Enabled then
+                                task.wait(0.14)
+                            else
+                                task.wait(0.12)
+                            end
                             SpeedValue.Value = oSpeed
                             oSpeed = SpeedValue.Value
                             end
@@ -4947,8 +4955,8 @@ runFunction(function()
 		Function = function() end,
 		Default = true
 	})
-    HeatseekerPingCheck = Speed.CreateToggle({
-		Name = "Heatseeker Ping Checks",
+    RiskyHeatseeker = Speed.CreateToggle({
+		Name = "Risky Heatseeker",
 		Function = function() end,
 		Default = true
 	})
@@ -8465,7 +8473,7 @@ runFunction(function()
 	})
 end)
 
---[[runFunction(function()
+runFunction(function()
 	local TeleportReach = {Enabled = false}
     local TeleportReachRange = {Value = 5}
 	TeleportReach = GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton({
@@ -8509,7 +8517,7 @@ end)
 			end	
 		end
 	})
-end)--]]
+end)
 
 runFunction(function()
 	local justsaid = ""

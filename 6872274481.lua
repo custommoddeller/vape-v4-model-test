@@ -9345,83 +9345,30 @@ runFunction(function()
 			if callback then
                 task.spawn(function()
                     task.wait(2)
-                    if game:GetService("RunService"):IsStudio() then wait(5) end
+                    local oldRoot = entity.character.HumanoidRootPart
+                    local clone = oldRoot:Clone()
 
-                    function startFunc()
-                        local oldRoot = entityLibrary.character.HumanoidRootPart
-                        local clone = oldRoot:Clone()
+                    lplr.Character.Parent = game
+                    clone = oldRoot:Clone()
+                    clone.Parent = lplr.Character
+                    oldRoot.Parent = game.Workspace.CurrentCamera
+                    clone.CFrame = oldRoot.CFrame
+                    lplr.Character.PrimaryPart = clone
+                    lplr.Character.Parent = workspace
+                    oldRoot.Transparency = .5
+                    clone.Transparency = 1
+                    oldRoot.CanCollide = true
+                    clone.Color = Color3.new(1, 0, 0)
+                    oldRoot.Color = Color3.new(0.356863, 1, 0.00784314)
+                    clone.CanCollide = false
+                    oldRoot.Anchored = false
 
-                        lplr.Character.Parent = game
-                        clone = oldRoot:Clone()
-                        clone.Parent = lplr.Character
-                        oldRoot.Parent = game.Workspace.CurrentCamera
-                        clone.CFrame = oldRoot.CFrame
-                        lplr.Character.PrimaryPart = clone
-                        lplr.Character.Parent = workspace
-                        oldRoot.Transparency = .5
-                        clone.Transparency = 1
-                        oldRoot.CanCollide = true
-                        clone.Color = Color3.new(1, 0, 0)
-                        oldRoot.Color = Color3.new(0.356863, 1, 0.00784314)
-                        clone.CanCollide = false
-                        oldRoot.Anchored = false
-
-                        for i,v in pairs(lplr.Character:GetDescendants()) do 
-                            if v:IsA("Weld") or v:IsA("Motor6D") then 
-                                if v.Part0 == oldRoot then v.Part0 = clone end
-                                if v.Part1 == oldRoot then v.Part1 = clone end
-                            end
-                            if v:IsA("BodyVelocity") then 
-                                v:Destroy()
-                            end
+                    repeat task.wait() 
+                        if (clone.Position - oldRoot.Position).magnitude > AnticheatHeatseekerMagnitude.Value then
+                            oldRoot.CFrame = CFrame.new(clone.Position)
                         end
-                    end
-
-                    task.spawn(function()
-                        local oldPosition
-                        local noWalk = false
-                        while AnticheatHeatseeker.Enabled do
-                            --print((clone.Position - oldRoot.Position).magnitude)
-                            if (clone.Position - oldRoot.Position).magnitude >= AnticheatHeatseekerMagnitude.Value then
-                                --print("lol test")
-
-                                rTween = game:GetService("TweenService"):Create(oldRoot, TweenInfo.new(AnticheatHeatseekerLerp.Value, Enum.EasingStyle.Sine), {CFrame = CFrame.new(clone.Position)})
-                                rTween:Play()
-                            end
-                            task.wait()
-                        end
-                    end)
-
-                    task.spawn(function()
-                        
-                        repeat task.wait() 
-                            --
-                            oldRoot.Rotation = Vector3.new(clone.Rotation.X, clone.Rotation.Y, clone.Rotation.Z)
-                            if entity.character.HumanoidStateType == Enum.HumanoidStateType.Landed then
-                                
-                                rTween = game:GetService("TweenService"):Create(oldRoot, TweenInfo.new(math.random(15, 30) / 100, Enum.EasingStyle.Sine), {CFrame = CFrame.new(clone.Position)})
-                                rTween:Play()
-                            end
-                        until (not AnticheatHeatseeker.Enabled)
-                    end)
-
-                    lplr.Character.Animate.Disabled = true
-
-                    if not game:GetService("RunService"):IsStudio() then
-                        lplr:GetAttributeChangedSignal('LastTeleported'):Connect(function()
-                            if not AnticheatHeatseeker.Enabled then return end
-                            if lplr.Character:FindFirstChildWhichIsA('ForceField') == nil then
-                                clone.CFrame = CFrame.new(oldRoot.position)
-                                clone.Anchored = true
-                                oldRoot.Anchored = true
-                                task.wait(5)
-                                clone.Anchored = false
-                                oldRoot.Anchored = false
-                            end
-                        end)
-                    end
+                     until (not AnticheatHeatseeker.Enabled)
                 end)
-                startFunc()
             else
                 game:GetService("ReplicatedStorage"):WaitForChild("rbxts_include"):WaitForChild("node_modules"):WaitForChild("@rbxts"):WaitForChild("net"):WaitForChild("out"):WaitForChild("_NetManaged"):WaitForChild("ResetCharacter"):FireServer()
 			end	

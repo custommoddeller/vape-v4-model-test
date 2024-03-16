@@ -8473,7 +8473,7 @@ runFunction(function()
 	})
 end)
 
-runFunction(function()
+--[[runFunction(function()
 	local TeleportReach = {Enabled = false}
     local TeleportReachRange = {Value = 5}
 	TeleportReach = GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton({
@@ -8517,7 +8517,7 @@ runFunction(function()
 			end	
 		end
 	})
-end)
+end)--]]
 
 runFunction(function()
 	local justsaid = ""

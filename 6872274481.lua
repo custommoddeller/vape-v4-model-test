@@ -4870,18 +4870,11 @@ runFunction(function()
                         SpeedValue.Value = 21.5
                         repeat task.wait(0.8)
                             if HeatseekerNotify.Enabled then warningNotification("Heatseeker", "Boosted", 0.5) end
-                            if HeatseekerPingCheck.Enabled then
-                                if lplr:GetNetworkPing() * 1000 > 250 then
-                                    warningNotification("Heatseeker", "Boost cancelled: Ping > 250 ("..lplr:GetNetworkPing() * 1000..")")
-                                    SpeedValue.Value = 21.5
-                                    return
-                                end
-                            else
-                                oSpeed = SpeedValue.Value
-                                SpeedValue.Value = 38.4
-                                task.wait(0.12)
-                                SpeedValue.Value = oSpeed
-                                oSpeed = SpeedValue.Value
+                            oSpeed = SpeedValue.Value
+                            SpeedValue.Value = 38.4
+                            task.wait(0.12)
+                            SpeedValue.Value = oSpeed
+                            oSpeed = SpeedValue.Value
                             end
                         until not Speed.Enabled or not SpeedHeatseeker.Enabled
                     end

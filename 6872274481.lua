@@ -4847,11 +4847,11 @@ runFunction(function()
 			if callback then
                 task.spawn(function()
                     if SpeedHeatseeker.Enabled then
-                        repeat task.wait(2)
+                        repeat task.wait(2.12)
                             warningNotification("Heatseeker", "Boosted", 1)
                             oSpeed = SpeedValue.Value
-                            SpeedValue.Value = 50
-                            task.wait(0.09)
+                            SpeedValue.Value = 35
+                            task.wait(0.12)
                             SpeedValue.Value = oSpeed
                             oSpeed = SpeedValue.Value
                         until not Speed.Enabled or not SpeedHeatseeker.Enabled

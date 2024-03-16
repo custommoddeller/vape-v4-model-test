@@ -9860,6 +9860,7 @@ end)
 
 runFunction(function()
     local TeleportJump = {Enabled = false}
+    local TeleportJumpSpeed = {Value = 15}
     TeleportJump = GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton({
         Name = "TeleportJump",
         Function = function(callback)
@@ -9870,11 +9871,18 @@ runFunction(function()
 						task.wait(0.48)
 					end
 				end)
-				HighJump.ToggleButton(false)
+				TeleportJump.ToggleButton(false)
             end
         end,
 		HoverText = "Longjump with teleportation (may lagback)"
     })
+    TeleportJumpSpeed = TeleportJump.CreateSlider({
+		Name = "Speed",
+		Min = 5,
+		Max = 35,
+		Default = 15,
+		Function = function() return end
+	})
 end)
 
 runFunction(function()

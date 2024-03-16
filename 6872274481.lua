@@ -9866,7 +9866,7 @@ runFunction(function()
             if callback then 
 				task.spawn(function()
 					for i = 1, 5 do
-						entityLibrary.character.HumanoidRootPart.CFrame = CFrame.new(entityLibrary.character.HumanoidRootPart.CFrame.LookVector * 5)
+						entityLibrary.character.HumanoidRootPart.CFrame = CFrame.new(entityLibrary.character.HumanoidRootPart.Position + entityLibrary.character.HumanoidRootPart.CFrame.LookVector * 5)
 						task.wait(0.48)
 					end
 				end)

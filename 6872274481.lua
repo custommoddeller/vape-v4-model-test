@@ -3711,13 +3711,11 @@ runFunction(function()
 								end
 								if originalRootC0 and killauracframe.Enabled then
 									if targetedPlayer ~= nil then
-										local targetPos = targetedPlayer.RootPart.Position + Vector3.new(0, 2, 0)
-										local direction = (Vector3.new(targetPos.X, targetPos.Y, targetPos.Z) - entityLibrary.character.Head.Position).Unit
-										local direction2 = (Vector3.new(targetPos.X, Root.Position.Y, targetPos.Z) - Root.Position).Unit
-										local lookCFrame = (CFrame.new(Vector3.zero, (Root.CFrame):VectorToObjectSpace(direction)))
-										local lookCFrame2 = (CFrame.new(Vector3.zero, (Root.CFrame):VectorToObjectSpace(direction2)))
-										Neck.C0 = CFrame.new(originalNeckC0) * CFrame.Angles(lookCFrame.LookVector.Unit.y, 0, 0)
-										RootC0.C0 = lookCFrame2 + originalRootC0
+                                        local chrPos=entityLibrary.character.PrimaryPart.Position
+                                        local tPos=targetedPlayer.Character.HumanoidRootPart.Position
+                                        local modTPos=Vector3.new(tPos.X,chrPos.Y,tPos.Z)
+                                        local newCF=CFrame.new(chrPos,modTPos)
+                                        entityLibrary.character:SetPrimaryPartCFrame(newCF)
 									else
 										Neck.C0 = CFrame.new(originalNeckC0)
 										RootC0.C0 = CFrame.new(originalRootC0)
@@ -9315,19 +9313,8 @@ runFunction(function()
                 task.spawn(function()
                     repeat task.wait()
                         local TPREntity = EntityNearPosition(TeleportReachRange.Value)
-                        if TPREntity ~= nil and TPREntity ~= lplr then
-                            gotEntity = true
-                            if gotEntity then
-                                gotEntity = false
-                                local attackedAtPosCF = entityLibrary.character.HumanoidRootPart.CFrame
-                                local attackedAtPosV3 = entityLibrary.character.HumanoidRootPart.CFrame
-                            end
-                            repeat task.wait()
-                                entityLibrary.character.HumanoidRootPart.CFrame = CFrame.new(TPREntity.Character.HumanoidRootPart.Position)
-                            until (TPREntity == nil or not TeleportReach.Enabled or (EntityNearPosition(18) == nil) or not entity:isAlive())
-                            if (entityLibrary.character.HumanoidRootPart.Position - attackedAtPosV3).magnitude < 10 then
-                                entityLibrary.character.HumanoidRootPart.CFrame = attackedAtPosCF
-                            end
+                        if TPREntity then
+                            entityLibrary.character.HumanoidRootPart.CFrame = CFrame.new(TPREntity.Character.HumanoidRootPart.Position)
                         end
                     until (not TeleportReach.Enabled)
                 end)

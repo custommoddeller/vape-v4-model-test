@@ -2816,10 +2816,7 @@ runFunction(function()
                 task.spawn(function()
                     oflyspeed = FlySpeed.Value
                     FlySpeed.Value = FlySpeedBoostValue.Value
-                    for i = 1, FlySpeed.Value - oflyspeed.Value do
-                        FlySpeed.Value -= 1
-                        task.wait(FlySpeed.Value / oflyspeed.Value / 100)
-                    end
+                    task.wait(0.2)
                     FlySpeed.Value = oflyspeed
                     oflyspeed = FlySpeed.Value
                 end)

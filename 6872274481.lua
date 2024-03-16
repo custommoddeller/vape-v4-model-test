@@ -8484,7 +8484,7 @@ runFunction(function()
                     repeat task.wait()
                         local TPREntity = EntityNearPosition(TeleportReachRange.Value)
                         if TPREntity ~= nil and TPREntity ~= lplr then
-                            local oldRoot = entityLibrary.character.HumanoidRootPart
+                            local oldRoot = lplr.Character.HumanoidRootPart
                             local clone = oldRoot:Clone()
 
                             lplr.Character.Parent = game

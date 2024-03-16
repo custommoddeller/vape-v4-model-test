@@ -4846,7 +4846,7 @@ runFunction(function()
 			if callback then
 
                 task.spawn(function()
-                    repeat task.wait(4)
+                    repeat task.wait(2)
                         oSpeed = SpeedValue.Value
                         SpeedValue.Value = 35
                         task.wait(0.12)

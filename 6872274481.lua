@@ -4848,7 +4848,7 @@ runFunction(function()
                 task.spawn(function()
                     repeat task.wait(4)
                         oSpeed = SpeedValue.Value
-                        SpeedValue.Value = SpeedValue.Value + 10
+                        SpeedValue.Value = 35
                         task.wait(0.12)
                         SpeedValue.Value = oSpeed
                         oSpeed = SpeedValue.Value

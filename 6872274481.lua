@@ -2812,6 +2812,13 @@ runFunction(function()
 		Name = "Fly",
 		Function = function(callback)
 			if callback then
+                task.spawn(function()
+                    oflyspeed = FlySpeed
+                    FlySpeed = 45
+                    task.wait(0.1)
+                    FlySpeed = oflyspeed
+                    oflyspeed = FlySpeed
+                end)
 				olddeflate = bedwars.BalloonController.deflateBalloon
 				bedwars.BalloonController.deflateBalloon = function() end
 
@@ -9881,6 +9888,29 @@ runFunction(function()
 		Min = 5,
 		Max = 35,
 		Default = 15,
+		Function = function() return end
+	})
+end)
+
+runFunction(function()
+    local ReachTP = {Enabled = false}
+    local ReachTPVal = {Value = 5}
+    ReachTP = GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton({
+        Name = "ReachTP",
+        Function = function(callback)
+            if callback then 
+				task.spawn(function()
+
+				end)
+            end
+        end,
+		HoverText = "Teleport Reach"
+    })
+    ReachTPVal = ReachTP.CreateSlider({
+		Name = "Reach",
+		Min = 2,
+		Max = 12,
+		Default = 5,
 		Function = function() return end
 	})
 end)

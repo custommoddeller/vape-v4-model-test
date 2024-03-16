@@ -4846,7 +4846,7 @@ runFunction(function()
 		Function = function(callback)
 			if callback then
                 task.spawn(function()
-                    if SpeedMode.Value == "Heatseeker" then
+                    if SpeedHeatseeker.Enabled then
                         repeat task.wait(2)
                             warningNotification("Heatseeker", "Boosted", 1)
                             oSpeed = SpeedValue.Value

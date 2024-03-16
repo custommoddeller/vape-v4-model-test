@@ -4844,16 +4844,7 @@ runFunction(function()
 		Name = "Speed",
 		Function = function(callback)
 			if callback then
-                --[[task.spawn(function()
-                    while wait(4)
-                        if not callback then break end
-                        ospeed = SpeedValue.Value
-                        SpeedValue.Value = ospeed + 10
-                        task.wait(0.12)
-                        SpeedValue.Value = ospeed
-                        ospeed = SpeedValue.Value
-                    end
-                end)--]]
+
 
 				table.insert(Speed.Connections, vapeEvents.EntityDamageEvent.Event:Connect(function(damageTable)
 					if damageTable.entityInstance == lplr.Character and (damageTable.damageType ~= 0 or damageTable.extra and damageTable.extra.chargeRatio ~= nil) and (not (damageTable.knockbackMultiplier and damageTable.knockbackMultiplier.disabled or damageTable.knockbackMultiplier and damageTable.knockbackMultiplier.horizontal == 0)) and SpeedDamageBoost.Enabled then 

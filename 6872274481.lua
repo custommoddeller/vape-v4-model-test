@@ -4837,6 +4837,7 @@ runFunction(function()
 	local SpeedJumpVanilla = {Enabled = false}
 	local SpeedAnimation = {Enabled = false}
     local SpeedHeatseeker = {Enabled = false}
+    local HeatseekerNotify = {Enabled = false}
 	local raycastparameters = RaycastParams.new()
 	local damagetick = tick()
 
@@ -4847,10 +4848,10 @@ runFunction(function()
 			if callback then
                 task.spawn(function()
                     if SpeedHeatseeker.Enabled then
-                        repeat task.wait(1.2)
-                            warningNotification("Heatseeker", "Boosted", 1)
+                        repeat task.wait(0.8)
+                            if HeatseekerNotify.Enabled then warningNotification("Heatseeker", "Boosted", 1) end
                             oSpeed = SpeedValue.Value
-                            SpeedValue.Value = 31.7
+                            SpeedValue.Value = 28.6
                             task.wait(0.12)
                             SpeedValue.Value = oSpeed
                             oSpeed = SpeedValue.Value
@@ -4919,6 +4920,11 @@ runFunction(function()
 		Name = "Heatseeker",
 		Function = function() if Speed.Enabled then Speed.ToggleButton(false) Speed.ToggleButton(false) end end,
 		Default = false
+	})
+    HeatseekerNotify = Speed.CreateToggle({
+		Name = "Heatseeker Notify",
+		Function = function() end,
+		Default = true
 	})
 	SpeedValue = Speed.CreateSlider({
 		Name = "Speed",

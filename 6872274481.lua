@@ -2813,11 +2813,11 @@ runFunction(function()
 		Function = function(callback)
 			if callback then
                 task.spawn(function()
-                    oflyspeed = FlySpeed
-                    FlySpeed = 45
+                    oflyspeed = FlySpeed.Value
+                    FlySpeed.Value = 45
                     task.wait(0.1)
-                    FlySpeed = oflyspeed
-                    oflyspeed = FlySpeed
+                    FlySpeed.Value = oflyspeed
+                    oflyspeed = FlySpeed.Value
                 end)
 				olddeflate = bedwars.BalloonController.deflateBalloon
 				bedwars.BalloonController.deflateBalloon = function() end

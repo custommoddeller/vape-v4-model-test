@@ -3713,12 +3713,13 @@ runFunction(function()
 								end
 								if originalRootC0 and killauracframe.Enabled then
 									if targetedPlayer ~= nil then
-                                        local chrPos=lplr.Character.PrimaryPart.Position
-                                        local tPos=targetedPlayer.Character.HumanoidRootPart.Position
-                                        local modTPos=Vector3.new(tPos.X,chrPos.Y,tPos.Z)
-                                        local newCF=CFrame.new(chrPos,modTPos)
-                                        lplr.Character:SetPrimaryPartCFrame(newCF)
-                                        local avoidBugThing = true
+                                        if not avoidBugThing then
+                                            local chrPos=lplr.Character.PrimaryPart.Position
+                                            local tPos=targetedPlayer.Character.HumanoidRootPart.Position
+                                            local modTPos=Vector3.new(tPos.X,chrPos.Y,tPos.Z)
+                                            local newCF=CFrame.new(chrPos,modTPos)
+                                            lplr.Character:SetPrimaryPartCFrame(newCF)
+                                        end
 									else
 										Neck.C0 = CFrame.new(originalNeckC0)
 										RootC0.C0 = CFrame.new(originalRootC0)
@@ -9315,11 +9316,10 @@ runFunction(function()
 			if callback then
                 task.spawn(function()
                     repeat task.wait()
-                        if not avoidBugThing then
-                            local TPREntity = EntityNearPosition(TeleportReachRange.Value)
-                            if TPREntity then
-                                entityLibrary.character.HumanoidRootPart.CFrame = CFrame.new(TPREntity.Character.HumanoidRootPart.Position)
-                            end
+                        local TPREntity = EntityNearPosition(TeleportReachRange.Value)
+                        if TPREntity then
+                            avoidBugThing = true
+                            entityLibrary.character.HumanoidRootPart.CFrame = CFrame.new(TPREntity.Character.HumanoidRootPart.Position)
                         end
                     until (not TeleportReach.Enabled)
                 end)

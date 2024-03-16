@@ -9335,12 +9335,13 @@ runFunction(function()
 
                             repeat task.wait()
                                 oldRoot.CFrame = CFrame.new(TPREntity.Position)
-                            until (TPREntity == nil or TPREntity.Character.Humanoid.Health <= 0 or not TeleportReach.Enabled)
+                            until (TPREntity == nil or TPREntity.Character.Humanoid.Health <= 0 or not TeleportReach.Enabled or (EntityNearPosition(18) == nil))
+                            if not oldRoot or not oldRoot.Parent then return end
+                            lplr.Character.Parent = game
                             oldRoot.Parent = lplr.Character
-                            lplr.Character.Parent = workspace
                             lplr.Character.PrimaryPart = oldRoot
-                            oldRoot.CanCollide = false
-                            oldRoot.Transparency = 0
+                            lplr.Character.Parent = workspace
+                            oldRoot.CanCollide = true
                             clone:Destroy()
                         end
                     until (not TeleportReach.Enabled)

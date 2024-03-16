@@ -2794,8 +2794,8 @@ runFunction(function()
 	local groundtime = tick()
 	local onground = false
 	local lastonground = false
-    local FlySpeedBoost = false
-    local FlySpeedBoostValue = {Value = 45}
+    local FlySpeedBoost = true
+    local FlySpeedBoostValue = {Value = 75}
 	local alternatelist = {"Normal", "AntiCheat A", "AntiCheat B"}
 
 	local function inflateBalloon()
@@ -2995,20 +2995,20 @@ runFunction(function()
 		Default = false
         HoverText = "Speeds up fly for 0.2s"
 	})
-	FlySpeed = Fly.CreateSlider({
+	--[[FlySpeed = Fly.CreateSlider({
 		Name = "Speed",
 		Min = 1,
 		Max = 23,
 		Function = function(val) end, 
 		Default = 23
-	})
-	FlySpeedBoostValue = Fly.CreateSlider({
+	})--]]
+	--[[FlySpeedBoostValue = Fly.CreateSlider({
 		Name = "Boost",
 		Min = 1,
 		Max = 120,
 		Function = function(val) end, 
 		Default = 45
-	})
+	})--]]
 	FlyVerticalSpeed = Fly.CreateSlider({
 		Name = "Vertical Speed",
 		Min = 1,

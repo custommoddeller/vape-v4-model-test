@@ -4856,7 +4856,6 @@ runFunction(function()
 	local SpeedAnimation = {Enabled = false}
     local SpeedHeatseeker = {Enabled = false}
     local HeatseekerNotify = {Enabled = false}
-    local RiskyHeatseeker = {Enabled = false}
 	local raycastparameters = RaycastParams.new()
 	local damagetick = tick()
 
@@ -4871,16 +4870,8 @@ runFunction(function()
                         repeat task.wait(0.8)
                             if HeatseekerNotify.Enabled then warningNotification("Heatseeker", "Boosted", 0.5) end
                             oSpeed = SpeedValue.Value
-                            if RiskyHeatseeker.Enabled then
-                                SpeedValue.Value = 38.1
-                            else
-                                SpeedValue.Value = 42.7
-                            end
-                            if RiskyHeatseeker.Enabled then
-                                task.wait(0.14)
-                            else
-                                task.wait(0.12)
-                            end
+                            SpeedValue.Value = 38.1
+                            task.wait(0.14)
                             SpeedValue.Value = oSpeed
                             oSpeed = SpeedValue.Value
                             end

@@ -4856,6 +4856,7 @@ runFunction(function()
 	local SpeedAnimation = {Enabled = false}
     local SpeedHeatseeker = {Enabled = false}
     local HeatseekerNotify = {Enabled = false}
+    local HeatseekerPingCheck = {Enabled = false}
 	local raycastparameters = RaycastParams.new()
 	local damagetick = tick()
 
@@ -4868,11 +4869,21 @@ runFunction(function()
                     if SpeedHeatseeker.Enabled then
                         repeat task.wait(0.8)
                             if HeatseekerNotify.Enabled then warningNotification("Heatseeker", "Boosted", 0.5) end
-                            oSpeed = SpeedValue.Value
-                            SpeedValue.Value = 38.4
-                            task.wait(0.12)
-                            SpeedValue.Value = oSpeed
-                            oSpeed = SpeedValue.Value
+                            if HeatseekerPingCheck.Enabled then
+                                if lplr:GetNetworkPing() * 1000 < 250 then
+                                    oSpeed = SpeedValue.Value
+                                    SpeedValue.Value = 38.4
+                                    task.wait(0.12)
+                                    SpeedValue.Value = oSpeed
+                                    oSpeed = SpeedValue.Value
+                                end
+                            else
+                                oSpeed = SpeedValue.Value
+                                SpeedValue.Value = 38.4
+                                task.wait(0.12)
+                                SpeedValue.Value = oSpeed
+                                oSpeed = SpeedValue.Value
+                            end
                         until not Speed.Enabled or not SpeedHeatseeker.Enabled
                     end
                 end)
@@ -4941,6 +4952,11 @@ runFunction(function()
 	})
     HeatseekerNotify = Speed.CreateToggle({
 		Name = "Heatseeker Notify",
+		Function = function() end,
+		Default = true
+	})
+    HeatseekerPingCheck = Speed.CreateToggle({
+		Name = "Heatseeker Ping Checks",
 		Function = function() end,
 		Default = true
 	})

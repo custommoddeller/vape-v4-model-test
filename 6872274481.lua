@@ -4917,7 +4917,7 @@ runFunction(function()
 	})
 	SpeedHeatseeker = Speed.CreateToggle({
 		Name = "Heatseeker",
-		Function = function() end,
+		Function = function() if Speed.Enabled then Speed.ToggleButton(false) Speed.ToggleButton(false) end end,
 		Default = false
 	})
 	SpeedValue = Speed.CreateSlider({

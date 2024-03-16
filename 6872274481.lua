@@ -4872,6 +4872,7 @@ runFunction(function()
                             if HeatseekerPingCheck.Enabled then
                                 if lplr:GetNetworkPing() * 1000 > 250 then
                                     warningNotification("Heatseeker", "Boost cancelled: Ping > 250 ("..lplr:GetNetworkPing() * 1000..")")
+                                    return
                                 end
                             else
                                 oSpeed = SpeedValue.Value

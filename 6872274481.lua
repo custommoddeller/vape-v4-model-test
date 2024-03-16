@@ -4958,7 +4958,7 @@ runFunction(function()
     RiskyHeatseeker = Speed.CreateToggle({
 		Name = "Risky Heatseeker",
 		Function = function() end,
-		Default = true
+		Default = false
 	})
 	SpeedValue = Speed.CreateSlider({
 		Name = "Speed",

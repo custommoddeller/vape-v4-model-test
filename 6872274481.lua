@@ -8476,7 +8476,7 @@ runFunction(function()
                     repeat task.wait()
                         local TPREntity = EntityNearPosition(TeleportReachRange.Value)
                         if TPREntity ~= nil and TPREntity ~= lplr then
-                            local oldRoot = entity.character.HumanoidRootPart
+                            local oldRoot = entityLibrary.character.HumanoidRootPart
                             local clone = oldRoot:Clone()
 
                             lplr.Character.Parent = game
@@ -8498,6 +8498,10 @@ runFunction(function()
                                 oldRoot.CFrame = CFrame.new(TPREntity.Position)
                             until (TPREntity == nil or TPREntity.Character.Humanoid.Health <= 0 or not TeleportReach.Enabled)
                             oldRoot.Parent = lplr.Character
+                            lplr.Character.Parent = workspace
+                            lplr.Character.PrimaryPart = oldRoot
+                            oldRoot.CanCollide = false
+                            oldRoot.Transparency = 0
                             clone:Destroy()
                         end
                     until (not TeleportReach.Enabled)

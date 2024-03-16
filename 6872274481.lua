@@ -2818,7 +2818,9 @@ runFunction(function()
                     if FlySpeedBoost then
                         oflyspeed = FlySpeed.Value
                         FlySpeed.Value = FlySpeedBoostValue.Value
-                        task.wait(0.1)
+                        for i = 1, FlySpeed.Value - oflyspeed.Value do
+                            FlySpeed.Value -= 1
+                        end
                         FlySpeed.Value = oflyspeed
                         oflyspeed = FlySpeed.Value
                     end

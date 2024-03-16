@@ -9379,7 +9379,7 @@ runFunction(function()
                     task.spawn(function()
                         local oldPosition
                         local noWalk = false
-                        while (oldRoot ~= nil) or (clone ~= nil) do
+                        while AnticheatHeatseeker.Enabled do
                             --print((clone.Position - oldRoot.Position).magnitude)
                             if (clone.Position - oldRoot.Position).magnitude >= AnticheatHeatseekerMagnitude.Value then
                                 --print("lol test")
@@ -9400,22 +9400,12 @@ runFunction(function()
                                 oldRoot.Velocity = Vector3.zero
                             end
                             oldRoot.Rotation = Vector3.new(clone.Rotation.X, clone.Rotation.Y, clone.Rotation.Z)
-
-                            local raycast = workspace:Raycast(Vector3.new(clone.Position), Vector3.new(0, -30, 0))
-                            if raycast then
-                                game:GetService("TweenService"):Create(oldRoot, TweenInfo.new(math.random(15, 30) / 100, Enum.EasingStyle.Sine), {CFrame = raycast.Position}):Play()
-                            end
                             if entity.character.HumanoidStateType == Enum.HumanoidStateType.Landed then
                                 
                                 rTween = game:GetService("TweenService"):Create(oldRoot, TweenInfo.new(math.random(15, 30) / 100, Enum.EasingStyle.Sine), {CFrame = CFrame.new(clone.Position)})
                                 rTween:Play()
-                                if clone.Velocity.magnitude > AnticheatHeatseekerMagnitude.Value then
-                                    rTween:Cancel()
-                                else
-                                    rTween:Play()
-                                end
                             end
-                        until (oldRoot == nil) or (clone == nil)
+                        until (not AnticheatHeatseeker.Enabled)
                     end)
 
                     lplr.Character.Animate.Disabled = true

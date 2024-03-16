@@ -2999,10 +2999,12 @@ runFunction(function()
 		Function = function(val) end, 
 		Default = 23
 	})
-    FlySpeedBoost = Fly.CreateToggle({
-		Name = "Speed Boost",
-		Function = function() end, 
-		Default = true
+    FlySpeedBoostValue = Fly.CreateSlider({
+		Name = "Boost",
+		Min = 16,
+		Max = 150,
+		Function = function(val) end, 
+		Default = 75
 	})
 	FlyVerticalSpeed = Fly.CreateSlider({
 		Name = "Vertical Speed",

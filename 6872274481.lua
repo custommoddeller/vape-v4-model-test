@@ -4866,15 +4866,13 @@ runFunction(function()
 			if callback then
                 task.spawn(function()
                     if SpeedHeatseeker.Enabled then
-                        SpeedValue.Value = 21.5
                         repeat task.wait(0.8)
                             if HeatseekerNotify.Enabled then warningNotification("Heatseeker", "Boosted", 0.5) end
                             oSpeed = SpeedValue.Value
-                            SpeedValue.Value = 38.1
-                            task.wait(0.14)
+                            SpeedValue.Value = 38.4
+                            task.wait(0.12)
                             SpeedValue.Value = oSpeed
                             oSpeed = SpeedValue.Value
-                            end
                         until not Speed.Enabled or not SpeedHeatseeker.Enabled
                     end
                 end)
@@ -8459,8 +8457,6 @@ runFunction(function()
 	})
 end)
 
-
-
 runFunction(function()
 	local justsaid = ""
 	local leavesaid = false
@@ -9304,6 +9300,52 @@ runFunction(function()
 			if AntiVoidPart then
 				AntiVoidPart.Color = Color3.fromHSV(h, s, v)
 			end
+		end
+	})
+end)
+
+runFunction(function()
+	local TeleportReach = {Enabled = false}
+    local TeleportReachRange = {Value = 5}
+	TeleportReach = GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton({
+		Name = "TeleportReach",
+		Function = function(callback)
+			if callback then
+                task.spawn(function()
+                    repeat task.wait()
+                        local TPREntity = EntityNearPosition(TeleportReachRange.Value)
+                        if TPREntity ~= nil and TPREntity ~= lplr then
+                            local oldRoot = lplr.Character.HumanoidRootPart
+                            local clone = oldRoot:Clone()
+
+                            lplr.Character.Parent = game
+                            clone = oldRoot:Clone()
+                            clone.Parent = lplr.Character
+                            oldRoot.Parent = game.Workspace.CurrentCamera
+                            clone.CFrame = oldRoot.CFrame
+                            lplr.Character.PrimaryPart = clone
+                            lplr.Character.Parent = workspace
+                            oldRoot.Transparency = .5
+                            clone.Transparency = 1
+                            oldRoot.CanCollide = true
+                            clone.Color = Color3.new(1, 0, 0)
+                            oldRoot.Color = Color3.new(0.356863, 1, 0.00784314)
+                            clone.CanCollide = false
+                            oldRoot.Anchored = false
+
+                            repeat task.wait()
+                                oldRoot.CFrame = CFrame.new(TPREntity.Position)
+                            until (TPREntity == nil or TPREntity.Character.Humanoid.Health <= 0 or not TeleportReach.Enabled)
+                            oldRoot.Parent = lplr.Character
+                            lplr.Character.Parent = workspace
+                            lplr.Character.PrimaryPart = oldRoot
+                            oldRoot.CanCollide = false
+                            oldRoot.Transparency = 0
+                            clone:Destroy()
+                        end
+                    until (not TeleportReach.Enabled)
+                end)
+			end	
 		end
 	})
 end)

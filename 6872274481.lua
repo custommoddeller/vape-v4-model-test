@@ -2794,7 +2794,6 @@ runFunction(function()
 	local groundtime = tick()
 	local onground = false
 	local lastonground = false
-    local FlySpeedBoost = true
     local FlySpeedBoostValue = {Value = 75}
 	local alternatelist = {"Normal", "AntiCheat A", "AntiCheat B"}
 
@@ -2815,15 +2814,14 @@ runFunction(function()
 		Function = function(callback)
 			if callback then
                 task.spawn(function()
-                    if FlySpeedBoost then
-                        oflyspeed = FlySpeed.Value
-                        FlySpeed.Value = FlySpeedBoostValue.Value
-                        for i = 1, FlySpeed.Value - oflyspeed.Value do
-                            FlySpeed.Value -= 1
-                        end
-                        FlySpeed.Value = oflyspeed
-                        oflyspeed = FlySpeed.Value
+                    oflyspeed = FlySpeed.Value
+                    FlySpeed.Value = FlySpeedBoostValue.Value
+                    for i = 1, FlySpeed.Value - oflyspeed.Value do
+                        FlySpeed.Value -= 1
+                        task.wait(FlySpeed.Value / oflyspeed.Value / 100)
                     end
+                    FlySpeed.Value = oflyspeed
+                    oflyspeed = FlySpeed.Value
                 end)
 				olddeflate = bedwars.BalloonController.deflateBalloon
 				bedwars.BalloonController.deflateBalloon = function() end
@@ -2991,12 +2989,6 @@ runFunction(function()
 			return "Heatseeker"
 		end
 	})
-    --[[FlySpeedBoost = Fly.CreateToggle({
-		Name = "Speed Boost",
-		Function = function() return end, 
-		Default = false
-        HoverText = "Speeds up fly for 0.2s"
-	})--]]
 	FlySpeed = Fly.CreateSlider({
 		Name = "Speed",
 		Min = 1,
@@ -3004,13 +2996,6 @@ runFunction(function()
 		Function = function(val) end, 
 		Default = 23
 	})
-	--[[FlySpeedBoostValue = Fly.CreateSlider({
-		Name = "Boost",
-		Min = 1,
-		Max = 120,
-		Function = function(val) end, 
-		Default = 45
-	})--]]
 	FlyVerticalSpeed = Fly.CreateSlider({
 		Name = "Vertical Speed",
 		Min = 1,

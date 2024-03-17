@@ -2798,6 +2798,7 @@ runFunction(function()
 							if GravityFlyHighjump.Enabled then
 								warningNotification("GravityFly", "Highjumped", 2.5)
 								entityLibrary.character.HumanoidRootPart.Velocity = Vector3.new(entityLibrary.character.HumanoidRootPart.Velocity.X, 310, entityLibrary.character.HumanoidRootPart.Velocity.Z)
+								GravityFly.ToggleButton(false)
 							end
 						end
 						if (flygroundtime - tick()) < 0.2 and not onground then

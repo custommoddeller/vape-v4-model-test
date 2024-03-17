@@ -2794,7 +2794,7 @@ runFunction(function()
 						workspace.Gravity = 0
 						entityLibrary.character.HumanoidRootPart.Velocity = Vector3.new(0, ((GravityFlyUp and GravityFlyVerticalSpeed.Value) or (GravityFlyDown and -GravityFlyVerticalSpeed.Value) or 0), 0)
 						local flyray = getPlacedBlock(entityLibrary.character.HumanoidRootPart.Position + Vector3.new(0, (entityLibrary.character.Humanoid.HipHeight * -2) - 1, 0))
-						if (groundtime - tick()) <= 0.1 and not onground then
+						if (flygroundtime - tick()) <= 0.1 and not onground then
 							warningNotification("GravityFly", "Disabling GravityFly", 2.5)
 							GravityFly.ToggleButton(false)
 						end

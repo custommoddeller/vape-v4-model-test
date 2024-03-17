@@ -2779,6 +2779,9 @@ end)
 
 runFunction(function()
 	local GravityFly = {Enabled = false}
+	local GravityFlyUp = false
+	local GravityFlyDown = false
+	local GravityFlyVerticalSpeed = {Value = 44}
 	GravityFly = GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton({
 		Name = "GravityFly",
 		Function = function(callback)
@@ -2786,8 +2789,28 @@ runFunction(function()
                 task.spawn(function()
                     RunLoops:BindToHeartbeat("GravityFly", function()
 						workspace.Gravity = 0
-						entityLibrary.character.HumanoidRootPart.Velocity = Vector3.zero
+						entityLibrary.character.HumanoidRootPart.Velocity = Vector3.new(0, ((FlyUp and GravityFlyVerticalSpeed.Value) or (FlyDown and -GravityFlyVerticalSpeed.Value) or 0), 0)
 					end)
+					table.insert(GravityFly.Connections, inputService.InputBegan:Connect(function(input1)
+						if inputService:GetFocusedTextBox() == nil then
+							if input1.KeyCode == Enum.KeyCode.Space or input1.KeyCode == Enum.KeyCode.ButtonA then
+								GravityFlyUp = true
+							end
+							if input1.KeyCode == Enum.KeyCode.LeftShift or input1.KeyCode == Enum.KeyCode.ButtonL2 then
+								GravityFlyDown = true
+							end
+						end
+					end))
+					table.insert(GravityFly.Connections, inputService.InputEnded:Connect(function(input1)
+						if input1.KeyCode == Enum.KeyCode.Space or input1.KeyCode == Enum.KeyCode.ButtonA then
+							GravityFlyUp = false
+						end
+						if input1.KeyCode == Enum.KeyCode.LeftShift or input1.KeyCode == Enum.KeyCode.ButtonL2 then
+							GravityFlyDown = false
+						end
+					end))
+
+
                 end)
 			else
 				workspace.Gravity = 192.6

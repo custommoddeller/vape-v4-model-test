@@ -4941,7 +4941,8 @@
 								repeat task.wait(math.random(3, 6) / 10)
 									if HeatseekerNotify.Enabled then warningNotification("Heatseeker", "Boosted", 0.5) end
 									oSpeed = SpeedValue.Value
-									SpeedValue.Value = math.random(342, 431) / 10
+									--SpeedValue.Value = math.random(342, 431) / 10
+									SpeedValue.Value = 4
 									task.wait(0.16)
 									SpeedValue.Value = oSpeed
 									oSpeed = SpeedValue.Value

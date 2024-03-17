@@ -2794,6 +2794,12 @@ runFunction(function()
 						workspace.Gravity = 0
 						entityLibrary.character.HumanoidRootPart.Velocity = Vector3.new(0, ((GravityFlyUp and GravityFlyVerticalSpeed.Value) or (GravityFlyDown and -GravityFlyVerticalSpeed.Value) or 0), 0)
 						local flyray = getPlacedBlock(entityLibrary.character.HumanoidRootPart.Position + Vector3.new(0, (entityLibrary.character.Humanoid.HipHeight * -2) - 1, 0))
+						if (flygroundtime - tick()) <= 0.4 and not onground then
+							warningNotification("GravityFly", "Highjumped! Magnitude: " .. tostring((entityLibrary.character.HumanoidRootPart.Velocity).magnitude), 2.5)
+							if GravityFlyHighjump.Enabled then
+								entityLibrary.character.HumanoidRootPart.Velocity = Vector3.new(entityLibrary.character.HumanoidRootPart.Velocity.X, 310, entityLibrary.character.HumanoidRootPart.Velocity.Z)
+							end
+						end
 						if (flygroundtime - tick()) <= 0.1 and not onground then
 							warningNotification("GravityFly", "Disabling GravityFly", 2.5)
 							GravityFly.ToggleButton(false)
@@ -2822,9 +2828,6 @@ runFunction(function()
                 end)
 			else
 				workspace.Gravity = 192.6
-				if GravityFlyHighjump.Enabled then
-					entityLibrary.character.HumanoidRootPart.Velocity = Vector3.new(entityLibrary.character.HumanoidRootPart.Velocity.X, 310, entityLibrary.character.HumanoidRootPart.Velocity.Z)
-				end
 				GravityFlyDown = false
 				GravityFlyUp = false
 				RunLoops:UnbindFromHeartbeat("GravityFly")

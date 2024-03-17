@@ -2812,6 +2812,8 @@ runFunction(function()
                 end)
 			else
 				workspace.Gravity = 192.6
+				GravityFlyDown = false
+				GravityFlyUp = false
 				RunLoops:UnbindFromHeartbeat("GravityFly")
 			end	
 		end

@@ -3124,10 +3124,10 @@ runFunction(function()
 	local AlternateFlyVertical = {Enabled = true}
 	local AlternateFlyAutoPop = {Enabled = true}
 	local AlternateFlyAnyway = {Enabled = false}
-	local AlternateFlyAnywayProgressBar = {Enabled = false}
+	local FlyAnywayProgressBar = {Enabled = false}
 	local AlternateFlyDamageAnimation = {Enabled = false}
 	local AlternateFlyTP = {Enabled = false}
-	local AlternateFlyAnywayProgressBarFrame
+	local FlyAnywayProgressBarFrame
 	local olddeflate
 	local AlternateFlyUp = false
 	local AlternateFlyDown = false

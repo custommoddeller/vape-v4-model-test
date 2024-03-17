@@ -2843,7 +2843,7 @@ runFunction(function()
 		Default = 44
 	})
 	GravityFlyHighjump = GravityFly.CreateToggle({
-		Name = "Highjump",
+		Name = "Highjump (DON'T USE)",
 		Function = function() end, 
 		Default = false
 	})

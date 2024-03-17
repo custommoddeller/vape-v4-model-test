@@ -4937,8 +4937,12 @@ runFunction(function()
 			if callback then
 				task.spawn(function()
 					if SpeedHeatseeker.Enabled then
+
+
 						task.spawn(function()
 							repeat task.wait(math.random(3, 6) / 10)
+								if bedwars.matchState == 0 then repeat task.wait() until bedwars.matchState ~= 0 end
+
 								if HeatseekerNotify.Enabled then warningNotification("Heatseeker", "Boosted", 0.5) end
 								oSpeed = SpeedValue.Value
 								SpeedValue.Value = math.random(342, 431) / 10
@@ -10461,7 +10465,7 @@ task.spawn(function()
 
 			repeat
 				local commit = "main"
-				for i,v in pairs(game:HttpGet("https://github.com/7GrandDadPGN/VapeV4ForRoblox"):split("\n")) do 
+				for i,v in pairs(game:HttpGet("https://github.com/7GrandDadPGN/VapeV4ForRoblox"):split("\n")) do 	
 					if v:find("commit") and v:find("fragment") then 
 						local str = v:split("/")[5]
 						commit = str:sub(0, str:find('"') - 1)

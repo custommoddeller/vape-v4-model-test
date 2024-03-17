@@ -2789,7 +2789,7 @@ runFunction(function()
                 task.spawn(function()
                     RunLoops:BindToHeartbeat("GravityFly", function()
 						workspace.Gravity = 0
-						entityLibrary.character.HumanoidRootPart.Velocity = Vector3.new(0, ((FlyUp and GravityFlyVerticalSpeed.Value) or (FlyDown and -GravityFlyVerticalSpeed.Value) or 0), 0)
+						entityLibrary.character.HumanoidRootPart.Velocity = Vector3.new(0, ((GravityFlyUp and GravityFlyVerticalSpeed.Value) or (GravityFlyDown and -GravityFlyVerticalSpeed.Value) or 0), 0)
 					end)
 					table.insert(GravityFly.Connections, inputService.InputBegan:Connect(function(input1)
 						if inputService:GetFocusedTextBox() == nil then

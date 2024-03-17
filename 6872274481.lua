@@ -2779,6 +2779,9 @@ end)
 
 runFunction(function()
 	local GravityFly = {Enabled = false}
+	local GravityFlyTP = {Enabled = false}
+	local GravityFlyHighjump = {Enabled = false}
+	local flygroundtime = tick()
 	local GravityFlyUp = false
 	local GravityFlyDown = false
 	local GravityFlyVerticalSpeed = {Value = 44}
@@ -2790,6 +2793,11 @@ runFunction(function()
                     RunLoops:BindToHeartbeat("GravityFly", function()
 						workspace.Gravity = 0
 						entityLibrary.character.HumanoidRootPart.Velocity = Vector3.new(0, ((GravityFlyUp and GravityFlyVerticalSpeed.Value) or (GravityFlyDown and -GravityFlyVerticalSpeed.Value) or 0), 0)
+						local flyray = getPlacedBlock(entityLibrary.character.HumanoidRootPart.Position + Vector3.new(0, (entityLibrary.character.Humanoid.HipHeight * -2) - 1, 0))
+						if (groundtime - tick()) <= 0.1 and not onground then
+							warningNotification("GravityFly", "Disabling GravityFly", 2.5)
+							GravityFly.ToggleButton(false)
+						end
 					end)
 					table.insert(GravityFly.Connections, inputService.InputBegan:Connect(function(input1)
 						if inputService:GetFocusedTextBox() == nil then
@@ -2809,9 +2817,14 @@ runFunction(function()
 							GravityFlyDown = false
 						end
 					end))
+					flygroundtime = tick() + (2.6 + (entityLibrary.groundTick - tick()))
+					
                 end)
 			else
 				workspace.Gravity = 192.6
+				if GravityFlyHighjump.Enabled then
+					entityLibrary.character.HumanoidRootPart.Velocity = Vector3.new(entityLibrary.character.HumanoidRootPart.Velocity.X, 310, entityLibrary.character.HumanoidRootPart.Velocity.Z)
+				end
 				GravityFlyDown = false
 				GravityFlyUp = false
 				RunLoops:UnbindFromHeartbeat("GravityFly")
@@ -2824,6 +2837,11 @@ runFunction(function()
 		Max = 100,
 		Function = function(val) end, 
 		Default = 44
+	})
+	GravityFlyHighjump = GravityFly.CreateToggle({
+		Name = "Highjump",
+		Function = function() end, 
+		Default = false
 	})
 end)
 

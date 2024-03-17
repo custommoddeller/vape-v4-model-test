@@ -2777,6 +2777,26 @@ runFunction(function()
 	})
 end)
 
+runFunction(function()
+	local GravityFly = {Enabled = false}
+	GravityFly = GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton({
+		Name = "GravityFly",
+		Function = function(callback)
+			if callback then
+                task.spawn(function()
+                    RunLoops:BindToHeartbeat("GravityFly", function()
+						workspace.Gravity = 0
+						entityLibrary.character.HumanoidRootPart.Velocity = Vector3.zero
+					end)
+                end)
+			else
+				workspace.Gravity = 192.6
+				RunLoops:UnbindFromHeartbeat("GravityFly")
+			end	
+		end
+	})
+end)
+
 local autobankballoon = false
 runFunction(function()
 	local Fly = {Enabled = false}

@@ -2809,14 +2809,19 @@ runFunction(function()
 							GravityFlyDown = false
 						end
 					end))
-
-
                 end)
 			else
 				workspace.Gravity = 192.6
 				RunLoops:UnbindFromHeartbeat("GravityFly")
 			end	
 		end
+	})
+	GravityFlyVerticalSpeed = GravityFly.CreateSlider({
+		Name = "Vertical Speed",
+		Min = 1,
+		Max = 100,
+		Function = function(val) end, 
+		Default = 44
 	})
 end)
 

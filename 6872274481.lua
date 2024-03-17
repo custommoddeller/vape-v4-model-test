@@ -4937,14 +4937,25 @@ runFunction(function()
 			if callback then
                 task.spawn(function()
                     if SpeedHeatseeker.Enabled then
-                        repeat task.wait(math.random(5, 9) / 10)
-                            if HeatseekerNotify.Enabled then warningNotification("Heatseeker", "Boosted", 0.5) end
-                            oSpeed = SpeedValue.Value
-                            SpeedValue.Value = math.random(342, 397) / 10
-                            task.wait(math.random(2, 4) / 10)
-                            SpeedValue.Value = oSpeed
-                            oSpeed = SpeedValue.Value
-                        until not Speed.Enabled or not SpeedHeatseeker.Enabled
+						task.spawn(function()
+							repeat task.wait(math.random(5, 9) / 10)
+								if HeatseekerNotify.Enabled then warningNotification("Heatseeker", "Boosted", 0.5) end
+								oSpeed = SpeedValue.Value
+								SpeedValue.Value = math.random(342, 397) / 10
+								task.wait(math.random(2, 4) / 10)
+								SpeedValue.Value = oSpeed
+								oSpeed = SpeedValue.Value
+							until not Speed.Enabled or not SpeedHeatseeker.Enabled
+						end)
+
+						task.spawn(function()
+							repeat task.wait(0.1)
+								if (entityLibrary.character.HumanoidRootPart.Velocity).magnitude >= 39 then
+									entityLibrary.character.HumanoidRootPart.Velocity = Vector3.zero
+									speedValue.Value = 21.5
+								end
+							until not Speed.Enabled or not SpeedHeatseeker.Enabled
+						end)
                     end
                 end)
 

@@ -4938,14 +4938,15 @@
 					task.spawn(function()
 						if SpeedHeatseeker.Enabled then
 							task.spawn(function()
-								repeat task.wait(math.random(100, 2000) / 1000)
+								repeat task.wait()
 									if HeatseekerNotify.Enabled then warningNotification("Heatseeker", "Boosted", 0.5) end
 									oSpeed = SpeedValue.Value
 									--SpeedValue.Value = math.random(342, 431) / 10
-									SpeedValue.Value = 4
-									task.wait(0.3)
+									SpeedValue.Value = 23
+									task.wait(0.1)
 									SpeedValue.Value = oSpeed
 									oSpeed = SpeedValue.Value
+									task.wait(0.1)
 								until not Speed.Enabled or not SpeedHeatseeker.Enabled
 							end)
 

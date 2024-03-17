@@ -2778,341 +2778,6 @@ runFunction(function()
 end)
 
 local autobankballoon = false
-
-runFunction(function()
-	local AlternateFly = {Enabled = false}
-	local FlyMode = {Value = "CFrame"}
-	local FlyVerticalSpeed = {Value = 40}
-	local FlyVertical = {Enabled = true}
-	local FlyAutoPop = {Enabled = true}
-	local FlyAnyway = {Enabled = false}
-	local FlyAnywayProgressBar = {Enabled = false}
-	local FlyDamageAnimation = {Enabled = false}
-	local FlyTP = {Enabled = false}
-	local FlyAnywayProgressBarFrame
-	local olddeflate
-	local FlyUp = false
-	local FlyDown = false
-	local FlyCoroutine
-	local groundtime = tick()
-	local onground = false
-	local lastonground = false
-    local FlyHeatseeker = {Enabled = false}
-	local alternatelist = {"Normal", "AntiCheat A", "AntiCheat B"}
-
-	local function inflateBalloon()
-		if not AlternateFly.Enabled then return end
-		if entityLibrary.isAlive and (lplr.Character:GetAttribute("InflatedBalloons") or 0) < 1 then
-			autobankballoon = true
-			if getItem("balloon") then
-				bedwars.BalloonController:inflateBalloon()
-				return true
-			end
-		end
-		return false
-	end
-
-	AlternateFly = GuiLibrary.ObjectsThatCanBeSaved.BlatantWindow.Api.CreateOptionsButton({
-		Name = "AlternateFly",
-		Function = function(callback)
-			if callback then
-				olddeflate = bedwars.BalloonController.deflateBalloon
-				bedwars.BalloonController.deflateBalloon = function() end
-
-				table.insert(AlternateFly.Connections, inputService.InputBegan:Connect(function(input1)
-					if FlyVertical.Enabled and inputService:GetFocusedTextBox() == nil then
-						if input1.KeyCode == Enum.KeyCode.Space or input1.KeyCode == Enum.KeyCode.ButtonA then
-							FlyUp = true
-						end
-						if input1.KeyCode == Enum.KeyCode.LeftShift or input1.KeyCode == Enum.KeyCode.ButtonL2 then
-							FlyDown = true
-						end
-					end
-				end))
-				table.insert(AlternateFly.Connections, inputService.InputEnded:Connect(function(input1)
-					if input1.KeyCode == Enum.KeyCode.Space or input1.KeyCode == Enum.KeyCode.ButtonA then
-						FlyUp = false
-					end
-					if input1.KeyCode == Enum.KeyCode.LeftShift or input1.KeyCode == Enum.KeyCode.ButtonL2 then
-						FlyDown = false
-					end
-				end))
-				if inputService.TouchEnabled then
-					pcall(function()
-						local jumpButton = lplr.PlayerGui.TouchGui.TouchControlFrame.JumpButton
-						table.insert(Fly.Connections, jumpButton:GetPropertyChangedSignal("ImageRectOffset"):Connect(function()
-							FlyUp = jumpButton.ImageRectOffset.X == 146
-						end))
-						FlyUp = jumpButton.ImageRectOffset.X == 146
-					end)
-				end
-				table.insert(AlternateFly.Connections, vapeEvents.BalloonPopped.Event:Connect(function(poppedTable)
-					if poppedTable.inflatedBalloon and poppedTable.inflatedBalloon:GetAttribute("BalloonOwner") == lplr.UserId then 
-						lastonground = not onground
-						repeat task.wait() until (lplr.Character:GetAttribute("InflatedBalloons") or 0) <= 0 or not AlternateFly.Enabled
-						inflateBalloon() 
-					end
-				end))
-				table.insert(Fly.Connections, vapeEvents.AutoBankBalloon.Event:Connect(function()
-					repeat task.wait() until getItem("balloon")
-					inflateBalloon()
-				end))
-
-				local balloons
-				if entityLibrary.isAlive and (not bedwarsStore.queueType:find("mega")) then
-					balloons = inflateBalloon()
-				end
-				local megacheck = bedwarsStore.queueType:find("mega") or bedwarsStore.queueType == "winter_event"
-
-				task.spawn(function()
-					repeat task.wait() until bedwarsStore.queueType ~= "bedwars_test" or (not AlternateFly.Enabled)
-					if not AlternateFly.Enabled then return end
-					megacheck = bedwarsStore.queueType:find("mega") or bedwarsStore.queueType == "winter_event"
-				end)
-
-				local flyAllowed = entityLibrary.isAlive and ((lplr.Character:GetAttribute("InflatedBalloons") and lplr.Character:GetAttribute("InflatedBalloons") > 0) or bedwarsStore.matchState == 2 or megacheck) and 1 or 0
-				if flyAllowed <= 0 and shared.damageanim and (not balloons) then 
-					shared.damageanim()
-					bedwars.SoundManager:playSound(bedwars.SoundList["DAMAGE_"..math.random(1, 3)])
-				end
-
-				if FlyAnywayProgressBarFrame and flyAllowed <= 0 and (not balloons) then 
-					FlyAnywayProgressBarFrame.Visible = true
-					FlyAnywayProgressBarFrame.Frame:TweenSize(UDim2.new(1, 0, 0, 20), Enum.EasingDirection.InOut, Enum.EasingStyle.Linear, 0, true)
-				end
-
-				groundtime = tick() + (2.6 + (entityLibrary.groundTick - tick()))
-				FlyCoroutine = coroutine.create(function()
-					repeat
-						repeat task.wait() until (groundtime - tick()) < 0.6 and not onground
-						flyAllowed = ((lplr.Character and lplr.Character:GetAttribute("InflatedBalloons") and lplr.Character:GetAttribute("InflatedBalloons") > 0) or bedwarsStore.matchState == 2 or megacheck) and 1 or 0
-						if (not AlternateFly.Enabled) then break end
-						local Flytppos = -99999
-						if flyAllowed <= 0 and FlyTP.Enabled and entityLibrary.isAlive then 
-							local ray = workspace:Raycast(entityLibrary.character.HumanoidRootPart.Position, Vector3.new(0, -1000, 0), bedwarsStore.blockRaycast)
-							if ray then 
-								Flytppos = entityLibrary.character.HumanoidRootPart.Position.Y
-								local args = {entityLibrary.character.HumanoidRootPart.CFrame:GetComponents()}
-								args[2] = ray.Position.Y + (entityLibrary.character.HumanoidRootPart.Size.Y / 2) + entityLibrary.character.Humanoid.HipHeight
-								entityLibrary.character.HumanoidRootPart.CFrame = CFrame.new(unpack(args))
-								task.wait(0.12)
-								if (not AlternateFly.Enabled) then break end
-								flyAllowed = ((lplr.Character and lplr.Character:GetAttribute("InflatedBalloons") and lplr.Character:GetAttribute("InflatedBalloons") > 0) or bedwarsStore.matchState == 2 or megacheck) and 1 or 0
-								if flyAllowed <= 0 and Flytppos ~= -99999 and entityLibrary.isAlive then 
-									local args = {entityLibrary.character.HumanoidRootPart.CFrame:GetComponents()}
-									args[2] = Flytppos
-									entityLibrary.character.HumanoidRootPart.CFrame = CFrame.new(unpack(args))
-								end
-							end
-						end
-					until (not Fly.Enabled)
-				end)
-				coroutine.resume(FlyCoroutine)
-
-				RunLoops:BindToHeartbeat("AlternateFly", function(delta) 
-					if GuiLibrary.ObjectsThatCanBeSaved["Lobby CheckToggle"].Api.Enabled then 
-						if bedwars.matchState == 0 then return end
-					end
-					if entityLibrary.isAlive then
-						local playerMass = (entityLibrary.character.HumanoidRootPart:GetMass() - 1.4) * (delta * 100)
-						flyAllowed = ((lplr.Character:GetAttribute("InflatedBalloons") and lplr.Character:GetAttribute("InflatedBalloons") > 0) or bedwarsStore.matchState == 2 or megacheck) and 1 or 0
-						playerMass = playerMass + (flyAllowed > 0 and 4 or 0) * (tick() % 0.4 < 0.2 and -1 or 1)
-
-						if FlyAnywayProgressBarFrame then
-							FlyAnywayProgressBarFrame.Visible = flyAllowed <= 0
-							FlyAnywayProgressBarFrame.BackgroundColor3 = Color3.fromHSV(GuiLibrary.ObjectsThatCanBeSaved["Gui ColorSliderColor"].Api.Hue, GuiLibrary.ObjectsThatCanBeSaved["Gui ColorSliderColor"].Api.Sat, GuiLibrary.ObjectsThatCanBeSaved["Gui ColorSliderColor"].Api.Value)
-							FlyAnywayProgressBarFrame.Frame.BackgroundColor3 = Color3.fromHSV(GuiLibrary.ObjectsThatCanBeSaved["Gui ColorSliderColor"].Api.Hue, GuiLibrary.ObjectsThatCanBeSaved["Gui ColorSliderColor"].Api.Sat, GuiLibrary.ObjectsThatCanBeSaved["Gui ColorSliderColor"].Api.Value)
-						end
-
-						if flyAllowed <= 0 then 
-							local newray = getPlacedBlock(entityLibrary.character.HumanoidRootPart.Position + Vector3.new(0, (entityLibrary.character.Humanoid.HipHeight * -2) - 1, 0))
-							onground = newray and true or false
-							if lastonground ~= onground then 
-								if (not onground) then 
-									groundtime = tick() + (2.6 + (entityLibrary.groundTick - tick()))
-									if FlyAnywayProgressBarFrame then 
-										FlyAnywayProgressBarFrame.Frame:TweenSize(UDim2.new(0, 0, 0, 20), Enum.EasingDirection.InOut, Enum.EasingStyle.Linear, groundtime - tick(), true)
-									end
-								else
-									if FlyAnywayProgressBarFrame then 
-										FlyAnywayProgressBarFrame.Frame:TweenSize(UDim2.new(1, 0, 0, 20), Enum.EasingDirection.InOut, Enum.EasingStyle.Linear, 0, true)
-									end
-								end
-							end
-							if FlyAnywayProgressBarFrame then 
-								FlyAnywayProgressBarFrame.TextLabel.Text = math.max(onground and 2.5 or math.floor((groundtime - tick()) * 10) / 10, 0).."s"
-							end
-							lastonground = onground
-						else
-							onground = true
-							lastonground = true
-						end
-
-						local flyVelocity = entityLibrary.character.Humanoid.MoveDirection * (FlyMode.Value == "Normal" and FlySpeed.Value or 20)
-						entityLibrary.character.HumanoidRootPart.Velocity = flyVelocity + (Vector3.new(0, playerMass + (FlyUp and FlyVerticalSpeed.Value or 0) + (FlyDown and -FlyVerticalSpeed.Value or 0), 0))
-						if FlyMode.Value ~= "Normal" then
-							entityLibrary.character.HumanoidRootPart.CFrame = entityLibrary.character.HumanoidRootPart.CFrame + (entityLibrary.character.Humanoid.MoveDirection * ((FlySpeed.Value + getSpeed()) - 20)) * delta
-						end
-					end
-				end)
-			else
-				pcall(function() coroutine.close(FlyCoroutine) end)
-				autobankballoon = false
-				waitingforballoon = false
-				lastonground = nil
-				FlyUp = false
-				FlyDown = false
-				RunLoops:UnbindFromHeartbeat("Fly")
-				if FlyAnywayProgressBarFrame then 
-					FlyAnywayProgressBarFrame.Visible = false
-				end
-				if FlyAutoPop.Enabled then
-					if entityLibrary.isAlive and lplr.Character:GetAttribute("InflatedBalloons") then
-						for i = 1, lplr.Character:GetAttribute("InflatedBalloons") do
-							olddeflate()
-						end
-					end
-				end
-				bedwars.BalloonController.deflateBalloon = olddeflate
-				olddeflate = nil
-			end
-		end,
-		HoverText = "Makes you go zoom (longer Fly discovered by exelys and Cqded)",
-		ExtraText = function() 
-			return "Heatseeker"
-		end
-	})
-	FlySpeed = AlternateFly.CreateSlider({
-		Name = "Speed",
-		Min = 1,
-		Max = 23,
-		Function = function(val) end, 
-		Default = 23
-	})
-	FlyVerticalSpeed = AlternateFly.CreateSlider({
-		Name = "Vertical Speed",
-		Min = 1,
-		Max = 100,
-		Function = function(val) end, 
-		Default = 44
-	})
-	FlyVertical = AlternateFly.CreateToggle({
-		Name = "Y Level",
-		Function = function() end, 
-		Default = true
-	})
-	FlyAutoPop = AlternateFly.CreateToggle({
-		Name = "Pop Balloon",
-		Function = function() end, 
-		HoverText = "Pops balloons when Fly is disabled."
-	})
-	local oldcamupdate
-	local camcontrol
-	local Flydamagecamera = {Enabled = false}
-	FlyDamageAnimation = AlternateFly.CreateToggle({
-		Name = "Damage Animation",
-		Function = function(callback) 
-			if Flydamagecamera.Object then 
-				Flydamagecamera.Object.Visible = callback
-			end
-			if callback then 
-				task.spawn(function()
-					repeat
-						task.wait(0.1)
-						for i,v in pairs(getconnections(gameCamera:GetPropertyChangedSignal("CameraType"))) do 
-							if v.Function then
-								camcontrol = debug.getupvalue(v.Function, 1)
-							end
-						end
-					until camcontrol
-					local caminput = require(lplr.PlayerScripts.PlayerModule.CameraModule.CameraInput)
-					local num = Instance.new("IntValue")
-					local numanim
-					shared.damageanim = function()
-						if numanim then numanim:Cancel() end
-						if Flydamagecamera.Enabled then
-							num.Value = 1000
-							numanim = tweenService:Create(num, TweenInfo.new(0.5), {Value = 0})
-							numanim:Play()
-						end
-					end
-					oldcamupdate = camcontrol.Update
-					camcontrol.Update = function(self, dt) 
-						if camcontrol.activeCameraController then
-							camcontrol.activeCameraController:UpdateMouseBehavior()
-							local newCameraCFrame, newCameraFocus = camcontrol.activeCameraController:Update(dt)
-							gameCamera.CFrame = newCameraCFrame * CFrame.Angles(0, 0, math.rad(num.Value / 100))
-							gameCamera.Focus = newCameraFocus
-							if camcontrol.activeTransparencyController then
-								camcontrol.activeTransparencyController:Update(dt)
-							end
-							if caminput.getInputEnabled() then
-								caminput.resetInputForFrameEnd()
-							end
-						end
-					end
-				end)
-			else
-				shared.damageanim = nil
-				if camcontrol then 
-					camcontrol.Update = oldcamupdate
-				end
-			end
-		end
-	})
-	Flydamagecamera = AlternateFly.CreateToggle({
-		Name = "Camera Animation",
-		Function = function() end,
-		Default = true
-	})
-	Flydamagecamera.Object.BorderSizePixel = 0
-	Flydamagecamera.Object.BackgroundTransparency = 0
-	Flydamagecamera.Object.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
-	Flydamagecamera.Object.Visible = false
-	FlyAnywayProgressBar = AlternateFly.CreateToggle({
-		Name = "Progress Bar",
-		Function = function(callback) 
-			if callback then 
-				FlyAnywayProgressBarFrame = Instance.new("Frame")
-				FlyAnywayProgressBarFrame.AnchorPoint = Vector2.new(0.5, 0)
-				FlyAnywayProgressBarFrame.Position = UDim2.new(0.5, 0, 1, -200)
-				FlyAnywayProgressBarFrame.Size = UDim2.new(0.2, 0, 0, 20)
-				FlyAnywayProgressBarFrame.BackgroundTransparency = 0.5
-				FlyAnywayProgressBarFrame.BorderSizePixel = 0
-				FlyAnywayProgressBarFrame.BackgroundColor3 = Color3.new(0, 0, 0)
-				FlyAnywayProgressBarFrame.Visible = Fly.Enabled
-				FlyAnywayProgressBarFrame.Parent = GuiLibrary.MainGui
-				local FlyAnywayProgressBarFrame2 = FlyAnywayProgressBarFrame:Clone()
-				FlyAnywayProgressBarFrame2.AnchorPoint = Vector2.new(0, 0)
-				FlyAnywayProgressBarFrame2.Position = UDim2.new(0, 0, 0, 0)
-				FlyAnywayProgressBarFrame2.Size = UDim2.new(1, 0, 0, 20)
-				FlyAnywayProgressBarFrame2.BackgroundTransparency = 0
-				FlyAnywayProgressBarFrame2.Visible = true
-				FlyAnywayProgressBarFrame2.Parent = FlyAnywayProgressBarFrame
-				local FlyAnywayProgressBartext = Instance.new("TextLabel")
-				FlyAnywayProgressBartext.Text = "2s"
-				FlyAnywayProgressBartext.Font = Enum.Font.Gotham
-				FlyAnywayProgressBartext.TextStrokeTransparency = 0
-				FlyAnywayProgressBartext.TextColor3 =  Color3.new(0.9, 0.9, 0.9)
-				FlyAnywayProgressBartext.TextSize = 20
-				FlyAnywayProgressBartext.Size = UDim2.new(1, 0, 1, 0)
-				FlyAnywayProgressBartext.BackgroundTransparency = 1
-				FlyAnywayProgressBartext.Position = UDim2.new(0, 0, -1, 0)
-				FlyAnywayProgressBartext.Parent = FlyAnywayProgressBarFrame
-			else
-				if FlyAnywayProgressBarFrame then FlyAnywayProgressBarFrame:Destroy() FlyAnywayProgressBarFrame = nil end
-			end
-		end,
-		HoverText = "show amount of Fly time",
-		Default = true
-	})
-	FlyTP = AlternateFly.CreateToggle({
-		Name = "TP Down",
-		Function = function() end,
-		Default = true
-	})
-end)
-
 runFunction(function()
 	local Fly = {Enabled = false}
 	local FlyMode = {Value = "CFrame"}
@@ -3123,6 +2788,7 @@ runFunction(function()
 	local FlyAnywayProgressBar = {Enabled = false}
 	local FlyDamageAnimation = {Enabled = false}
 	local FlyTP = {Enabled = false}
+	local FlyBoost = {Enabled = false}
 	local FlyAnywayProgressBarFrame
 	local olddeflate
 	local FlyUp = false
@@ -3150,6 +2816,16 @@ runFunction(function()
 		Name = "Fly",
 		Function = function(callback)
 			if callback then
+				task.spawn(function()
+					if FlyBoost.Enabled then
+						oflyspeed = FlySpeed.Value
+						FlySpeed.Value = 75
+						task.wait(0.11)
+						FlySpeed.Value = oflyspeed
+						oflyspeed = FlySpeed.Value
+					end
+				end)
+				
 				olddeflate = bedwars.BalloonController.deflateBalloon
 				bedwars.BalloonController.deflateBalloon = function() end
 
@@ -3447,6 +3123,11 @@ runFunction(function()
 	})
 	FlyTP = Fly.CreateToggle({
 		Name = "TP Down",
+		Function = function() end,
+		Default = true
+	})
+	FlyBoost = Fly.CreateToggle({
+		Name = "Speed Boost",
 		Function = function() end,
 		Default = true
 	})

@@ -2794,10 +2794,10 @@ runFunction(function()
 						workspace.Gravity = 0
 						entityLibrary.character.HumanoidRootPart.Velocity = Vector3.new(0, ((GravityFlyUp and GravityFlyVerticalSpeed.Value) or (GravityFlyDown and -GravityFlyVerticalSpeed.Value) or 0), 0)
 						local flyray = getPlacedBlock(entityLibrary.character.HumanoidRootPart.Position + Vector3.new(0, (entityLibrary.character.Humanoid.HipHeight * -2) - 1, 0))
-						if (flygroundtime - tick()) < 0.9 and not onground then
+						if (flygroundtime - tick()) < 1.2 and not onground then
 							if GravityFlyHighjump.Enabled then
 								warningNotification("GravityFly", "Highjumped", 2.5)
-								entityLibrary.character.HumanoidRootPart.Velocity = Vector3.new(entityLibrary.character.HumanoidRootPart.Velocity.X, 310, entityLibrary.character.HumanoidRootPart.Velocity.Z)
+								entityLibrary.character.HumanoidRootPart.Velocity = Vector3.new(entityLibrary.character.HumanoidRootPart.Velocity.X, 390, entityLibrary.character.HumanoidRootPart.Velocity.Z)
 								GravityFly.ToggleButton(false)
 							end
 						end

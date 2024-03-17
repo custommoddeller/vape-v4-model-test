@@ -2785,7 +2785,7 @@ runFunction(function()
 	local GravityFlyUp = false
 	local GravityFlyDown = false
 	local GravityFlyVerticalSpeed = {Value = 44}
-	GravityFly = GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton({
+	GravityFly = GuiLibrary.ObjectsThatCanBeSaved.BlatantWindow.Api.CreateOptionsButton({
 		Name = "GravityFly",
 		Function = function(callback)
 			if callback then
@@ -2794,13 +2794,13 @@ runFunction(function()
 						workspace.Gravity = 0
 						entityLibrary.character.HumanoidRootPart.Velocity = Vector3.new(0, ((GravityFlyUp and GravityFlyVerticalSpeed.Value) or (GravityFlyDown and -GravityFlyVerticalSpeed.Value) or 0), 0)
 						local flyray = getPlacedBlock(entityLibrary.character.HumanoidRootPart.Position + Vector3.new(0, (entityLibrary.character.Humanoid.HipHeight * -2) - 1, 0))
-						if (flygroundtime - tick()) <= 0.6 and not onground then
+						if (flygroundtime - tick()) < 0.6 and not onground then
 							if GravityFlyHighjump.Enabled then
 								warningNotification("GravityFly", "Highjumped! Magnitude: " .. tostring((entityLibrary.character.HumanoidRootPart.Velocity).magnitude), 2.5)
 								entityLibrary.character.HumanoidRootPart.Velocity = Vector3.new(entityLibrary.character.HumanoidRootPart.Velocity.X, 310, entityLibrary.character.HumanoidRootPart.Velocity.Z)
 							end
 						end
-						if (flygroundtime - tick()) <= 0.1 and not onground then
+						if (flygroundtime - tick()) < 0.2 and not onground then
 							warningNotification("GravityFly", "Disabling GravityFly", 2.5)
 							GravityFly.ToggleButton(false)
 						end

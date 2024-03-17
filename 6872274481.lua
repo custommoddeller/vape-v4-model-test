@@ -4959,14 +4959,6 @@
 						end
 					end)
 
-					task.spawn(function()
-						if SpeedHeatseeker.Enabled then
-							task.spawn(function()
-							
-							end)
-						end
-					end)
-
 					table.insert(Speed.Connections, vapeEvents.EntityDamageEvent.Event:Connect(function(damageTable)
 						if damageTable.entityInstance == lplr.Character and (damageTable.damageType ~= 0 or damageTable.extra and damageTable.extra.chargeRatio ~= nil) and (not (damageTable.knockbackMultiplier and damageTable.knockbackMultiplier.disabled or damageTable.knockbackMultiplier and damageTable.knockbackMultiplier.horizontal == 0)) and SpeedDamageBoost.Enabled then 
 							damagetick = tick() + 0.4

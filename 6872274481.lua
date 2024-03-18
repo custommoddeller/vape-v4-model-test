@@ -8550,10 +8550,12 @@ runFunction(function()
 		Function = function(callback)
 			if callback then
 				task.spawn(function()
+					wait(6.9) --?? do not  question it :trollskull:
 					game.Players.LocalPlayer:SetAttribute("CustomMatchRole", "host")
 				end)
 			end	
-		end
+		end,
+		HoverText = "if you load before host and do the host instead of cohost you get host i think\nif host loads before you then execute cohost instead"
 	})
 end)
 

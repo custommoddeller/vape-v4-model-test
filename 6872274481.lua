@@ -8544,9 +8544,9 @@ runFunction(function()
 end)
 
 runFunction(function()
-	local CustomMatchExploit = {Enabled = false}
-	CustomMatchExploit = GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton({
-		Name = "CustomMatchExploit",
+	local ForceCustomMatchHost = {Enabled = false}
+	ForceCustomMatchHost = GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton({
+		Name = "ForceCustomMatchHost",
 		Function = function(callback)
 			if callback then
 				task.spawn(function()

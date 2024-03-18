@@ -10507,3 +10507,5 @@ task.spawn(function()
 		AutoLeave.ToggleButton(false)
 	end
 end)
+
+--made by _dremi

@@ -8544,6 +8544,21 @@ runFunction(function()
 end)
 
 runFunction(function()
+	local CustomMatchExploit = {Enabled = false}
+	CustomMatchExploit = GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton({
+		Name = "CustomMatchExploit",
+		Function = function(callback)
+			if callback then
+				task.spawn(function()
+					game.Players.LocalPlayer:SetAttribute("CustomMatchRole", "host")
+				end)
+			end	
+		end
+	})
+end)
+
+
+runFunction(function()
 	local justsaid = ""
 	local leavesaid = false
 	local alreadyreported = {}

@@ -8559,33 +8559,6 @@ runFunction(function()
 	})
 end)
 
-runFunction(function()
-	local SaberSpam = {Enabled = false}
-    SaberSpam = GuiLibrary.ObjectsThatCanBeSaved.BlatantWindow.Api.CreateOptionsButton({
-        Name = "SaberSpam",
-        Function = function(callback)
-            if callback then
-                task.spawn(function()
-					repeat
-						task.wait(0.03)
-						local plrentity = EntityNearPosition(15)
-						if plrentity and game:GetService("ReplicatedStorage"):WaitForChild("Inventories"):WaitForChild("flizeke"):FindFirstChild("infernal_saber") then
-							game:GetService("ReplicatedStorage"):WaitForChild("rbxts_include"):WaitForChild("node_modules"):WaitForChild("@rbxts"):WaitForChild("net"):WaitForChild("out"):WaitForChild("_NetManaged"):WaitForChild("HellBladeRelease"):FireServer(
-								
-									["chargeTime"] = 0.6942069420,
-									["player"] = game:GetService("Players").LocalPlayer,
-									["weapon"] = game:GetService("ReplicatedStorage"):WaitForChild("Inventories"):WaitForChild(lplr.Name):WaitForChild("infernal_saber")
-								
-							)
-						end
-					until not SaberSpam.Enabled
-				end)
-            end
-        end,
-        HoverText = "Requires infernal_saber (made for ForceCustomMatchHost)"
-    })
-end)
-
 
 
 runFunction(function()

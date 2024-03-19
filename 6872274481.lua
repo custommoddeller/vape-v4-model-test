@@ -8568,16 +8568,14 @@ runFunction(function()
                 task.spawn(function()
 					repeat
 						task.wait(0.03)
-						if (GuiLibrary.ObjectsThatCanBeSaved.Lobby CheckToggle.Api.Enabled == false or matchState ~= 0) and Multiaura.Enabled then
-							local plrs = GetAllNearestHumanoidToPosition(true, 18.8, 1, false)
-							for i,plr in pairs(plrs) do
-								local plrtype, plrattackable = WhitelistFunctions:CheckPlayerType(plr.Player)
-								if plrattackable then 
-									local selfpos = entityLibrary.character.HumanoidRootPart.Position
-									local newpos = plr.RootPart.Position
-									bedwars.ClientHandler:Get(bedwars.PaintRemote):SendToServer(selfpos, CFrame.lookAt(selfpos, newpos).lookVector)
-								end
-							end
+						local plrentity = EntityNearPosition(15)
+						if plrentity then
+							local args = {
+								[1] = Vector3.new(entityLibrary.character.HumanoidRootPart.Position),
+								[2] = Vector3.new(plrentity.Character.HumanoidRootPart.Position)
+							}
+							
+							game:GetService("ReplicatedStorage"):WaitForChild("rbxts_include"):WaitForChild("node_modules"):WaitForChild("@rbxts"):WaitForChild("net"):WaitForChild("out"):WaitForChild("_NetManaged"):WaitForChild("ShootShotgun"):FireServer(unpack(args))
 						end
 					until not Multiaura.Enabled
 				end)

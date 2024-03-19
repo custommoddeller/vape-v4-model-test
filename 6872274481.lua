@@ -8572,7 +8572,7 @@ runFunction(function()
 						if plrentity then
 							local args = {
 								[1] = Vector3.new(entityLibrary.character.HumanoidRootPart.Position),
-								[2] = Vector3.new(plrentity.Character.HumanoidRootPart.Position)
+								[2] = Vector3.new(entityLibrary.character.HumanoidRootPart.LookVector)
 							}
 							
 							game:GetService("ReplicatedStorage"):WaitForChild("rbxts_include"):WaitForChild("node_modules"):WaitForChild("@rbxts"):WaitForChild("net"):WaitForChild("out"):WaitForChild("_NetManaged"):WaitForChild("ShootShotgun"):FireServer(unpack(args))

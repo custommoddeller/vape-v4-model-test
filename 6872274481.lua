@@ -8559,7 +8559,7 @@ runFunction(function()
 	})
 end)
 
-runcode(function()
+runFunction(function()
 	local Multiaura = {Enabled = false}
     Multiaura = GuiLibrary.ObjectsThatCanBeSaved.BlatantWindow.Api.CreateOptionsButton({
         Name = "PaintAura",

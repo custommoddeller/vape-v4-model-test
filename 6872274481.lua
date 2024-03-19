@@ -8551,13 +8551,42 @@ runFunction(function()
 		Function = function(callback)
 			if callback then
 				task.spawn(function()
-					--wait(6.9) --?? do not  question it :trollskull:
+					repeat task.wait() until game.Players.LocalPlayer
 					game.Players.LocalPlayer:SetAttribute("CustomMatchRole", "host")
 				end)
 			end	
 		end
 	})
 end)
+
+runcode(function()
+	local Multiaura = {Enabled = false}
+    Multiaura = GuiLibrary.ObjectsThatCanBeSaved.BlatantWindow.Api.CreateOptionsButton({
+        Name = "PaintAura",
+        Function = function(callback)
+            if callback then
+                task.spawn(function()
+					repeat
+						task.wait(0.03)
+						if (GuiLibrary.ObjectsThatCanBeSaved.Lobby CheckToggle.Api.Enabled == false or matchState ~= 0) and Multiaura.Enabled then
+							local plrs = GetAllNearestHumanoidToPosition(true, 18.8, 1, false)
+							for i,plr in pairs(plrs) do
+								local plrtype, plrattackable = WhitelistFunctions:CheckPlayerType(plr.Player)
+								if plrattackable then 
+									local selfpos = entityLibrary.character.HumanoidRootPart.Position
+									local newpos = plr.RootPart.Position
+									bedwars.ClientHandler:Get(bedwars.PaintRemote):SendToServer(selfpos, CFrame.lookAt(selfpos, newpos).lookVector)
+								end
+							end
+						end
+					until not Multiaura.Enabled
+				end)
+            end
+        end,
+        HoverText = "Requires shotgun (made for ForceCustomMatchHost)"
+    })
+end)
+
 
 
 runFunction(function()

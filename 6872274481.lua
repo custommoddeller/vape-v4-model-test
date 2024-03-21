@@ -10129,7 +10129,7 @@ runFunction(function()
 				task.spawn(function()
 					SelectedBed = getEnemyBed()
 					killEntity()
-					warningNotification("test", SelectedBed.Name)
+					warningNotification("test", SelectedBed.Name, 5)
 				end)
 				AutoBed.ToggleButton(false)
 			end

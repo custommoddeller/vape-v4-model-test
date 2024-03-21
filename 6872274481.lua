@@ -10112,7 +10112,7 @@ runFunction(function()
 	local killEntity = function() entityLibrary.character.HumanoidRootPart.CFrame = CFrame.new(entityLibrary.character.HumanoidRootPart.CFrame.X, entityLibrary.character.HumanoidRootPart.CFrame.Y - 12345, entityLibrary.Character.HumanoidRootPart.CFrame.Z) end
 	local getEnemyBed = function()
 		for _, v in next, collectionService:GetTagged('bed') do
-			if v == nil then return end
+			if v == nil then continue end
 			return v
 		end	
 	end

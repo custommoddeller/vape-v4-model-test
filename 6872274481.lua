@@ -10111,11 +10111,7 @@ runFunction(function()
 	local SelectedBed
 	local killEntity = function() entityLibrary.character.HumanoidRootPart.CFrame = CFrame.new(entityLibrary.character.HumanoidRootPart.CFrame.X, entityLibrary.character.HumanoidRootPart.CFrame.Y - 12345, entityLibrary.Character.HumanoidRootPart.CFrame.Z) end
 	local findPlayer = function()
-		for _, v in next, game.Players:GetPlayers() do
-			if v.Humanoid.State ~= Enum.HumanoidStateType.Dead then
-				return v
-			end
-		end	
+		return game.Players[math.random(1, #game.Players:GetPlayers())]
 	end
 
 	SurpiseAttack = GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton({
@@ -10126,7 +10122,7 @@ runFunction(function()
 				task.spawn(function()
 					selectedPlayer = findPlayer()
 					killEntity()
-					warningNotification("test", v.Name, 5)
+					warningNotification("test", selectedPlayer.Name, 5)
 				end)
 				SurpiseAttack.ToggleButton(false)
 			end

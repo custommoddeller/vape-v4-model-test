@@ -10107,27 +10107,28 @@ end)--]]
 end)--]]
 
 runFunction(function()
-	local AutoBed = {Enabled = true}
+	local SurpiseAttack = {Enabled = true}
 	local SelectedBed
 	local killEntity = function() entityLibrary.character.HumanoidRootPart.CFrame = CFrame.new(entityLibrary.character.HumanoidRootPart.CFrame.X, entityLibrary.character.HumanoidRootPart.CFrame.Y - 12345, entityLibrary.Character.HumanoidRootPart.CFrame.Z) end
-	local getEnemyBed = function()
-		for _, v in next, collectionService:GetTagged('bed') do
-			if v == nil then continue end
-			return v
+	local findPlayer = function()
+		for _, v in next, game.Players:GetPlayers() do
+			if v.Humanoid.State ~= Enum.HumanoidStateType.Dead then
+				return v
+			end
 		end	
 	end
 
-	AutoBed = GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton({
-		Name = "AutoBed",
+	SurpiseAttack = GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton({
+		Name = "SurpiseAttack",
 		Function = function(callback) 
 			if callback then
-				if GuiLibrary.ObjectsThatCanBeSaved.InfiniteFlyOptionsButton.Api.Enabled then InfiniteFly.ToggleButton(false) end
+				--if GuiLibrary.ObjectsThatCanBeSaved.InfiniteFlyOptionsButton.Api.Enabled then InfiniteFly.ToggleButton(false) end
 				task.spawn(function()
-					SelectedBed = getEnemyBed()
+					selectedPlayer = findPlayer()
 					killEntity()
-					warningNotification("test", SelectedBed.Name, 5)
+					warningNotification("test", v.Name, 5)
 				end)
-				AutoBed.ToggleButton(false)
+				SurpiseAttack.ToggleButton(false)
 			end
 		end
 	})

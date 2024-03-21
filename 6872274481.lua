@@ -6414,10 +6414,10 @@ runFunction(function()
 	})
 end)
 
---[[runFunction(function()
+runFunction(function()
 	local AutoBed = {Enabled = true}
 	local SelectedBed
-	local killEntity = function() entityLibrary.character.HumanoidRootPart.CFrame = CFrame.new(entityLibrary.character.HumanoidRootPart.CFrame.X, entityLibrary.character.HumanoidRootPart.CFrame.Y - 12345, entityLibrary.Character.HumanoidRootPart.CFrame.Z)
+	local killEntity = function() entityLibrary.character.HumanoidRootPart.CFrame = CFrame.new(entityLibrary.character.HumanoidRootPart.CFrame.X, entityLibrary.character.HumanoidRootPart.CFrame.Y - 12345, entityLibrary.Character.HumanoidRootPart.CFrame.Z) end
 	local getEnemyBed = function()
 		for _, v in next, collectionService:GetTagged('bed') do
 			if v:GetAttribute('BedShieldEndTime') and v:GetAttribute('BedShieldEndTime') > workspace:GetServerTimeNow() then continue end
@@ -6442,7 +6442,7 @@ end)
 			end
 		end
 	})
-end)--]]
+end)
 
 
 runFunction(function()

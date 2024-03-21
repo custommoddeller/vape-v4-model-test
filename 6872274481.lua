@@ -10121,7 +10121,7 @@ runFunction(function()
 				--if GuiLibrary.ObjectsThatCanBeSaved.InfiniteFlyOptionsButton.Api.Enabled then InfiniteFly.ToggleButton(false) end
 				task.spawn(function()
 					selectedPlayer = findPlayer()
-					killEntity()
+					--killEntity()
 					warningNotification("test", selectedPlayer.Name, 5)
 				end)
 				SurpiseAttack.ToggleButton(false)

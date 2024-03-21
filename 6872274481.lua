@@ -6414,7 +6414,7 @@ runFunction(function()
 	})
 end)
 
-runFunction(function()
+--[[runFunction(function()
 	local AutoBed = {Enabled = true}
 	local SelectedBed
 	local killEntity = function() entityLibrary.character.HumanoidRootPart.CFrame = CFrame.new(entityLibrary.character.HumanoidRootPart.CFrame.X, entityLibrary.character.HumanoidRootPart.CFrame.Y - 12345, entityLibrary.Character.HumanoidRootPart.CFrame.Z)
@@ -6442,7 +6442,7 @@ runFunction(function()
 			end
 		end
 	})
-end)
+end)--]]
 
 
 runFunction(function()

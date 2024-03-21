@@ -10108,10 +10108,10 @@ end)--]]
 
 runFunction(function()
 	local SurpiseAttack = {Enabled = true}
-	local SelectedBed
-	local killEntity = function() entityLibrary.character.HumanoidRootPart.CFrame = CFrame.new(entityLibrary.character.HumanoidRootPart.CFrame.X, entityLibrary.character.HumanoidRootPart.CFrame.Y - 12345, entityLibrary.Character.HumanoidRootPart.CFrame.Z) end
+	local selectedPlayer
+	local killEntity = function() entityLibrary.character.HumanoidRootPart.CFrame = CFrame.new(entityLibrary.character.HumanoidRootPart.CFrame.X, -12345, entityLibrary.Character.HumanoidRootPart.CFrame.Z) end
 	local findPlayer = function()
-		return game.Players[math.random(1, #game.Players:GetPlayers())]
+		return game.Players:GetPlayers()[math.random(1, #game.Players:GetPlayers())]
 	end
 
 	SurpiseAttack = GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton({

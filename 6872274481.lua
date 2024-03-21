@@ -10131,7 +10131,6 @@ runFunction(function()
 					killEntity()
 					warningNotification("test", SelectedBed.Name, 5)
 				end)
-				AutoBed.ToggleButton(false)
 			end
 		end
 	})

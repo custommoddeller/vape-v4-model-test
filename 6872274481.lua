@@ -10109,7 +10109,7 @@ end)--]]
 runFunction(function()
 	local SurpiseAttack = {Enabled = true}
 	local selectedPlayer
-	local killEntity = function() entityLibrary.character.HumanoidRootPart.CFrame = CFrame.new(entityLibrary.character.HumanoidRootPart.CFrame.X, -12345, entityLibrary.Character.HumanoidRootPart.CFrame.Z) end
+	local killEntity = function() bedwars.ClientHandler:Get(bedwars.ResetRemote):SendToServer() end
 	local findPlayer = function()
 		return game.Players:GetPlayers()[math.random(1, #game.Players:GetPlayers())]
 	end

@@ -10113,10 +10113,10 @@ runFunction(function()
 	local killEntity = function() entityLibrary.character.HumanoidRootPart.CFrame = CFrame.new(entityLibrary.character.HumanoidRootPart.CFrame.X, entityLibrary.character.HumanoidRootPart.CFrame.Y - 12345, entityLibrary.Character.HumanoidRootPart.CFrame.Z) end
 	local getEnemyBed = function()
 		for _, v in next, collectionService:GetTagged('bed') do
-			if v:GetAttribute('BedShieldEndTime') and v:GetAttribute('BedShieldEndTime') > workspace:GetServerTimeNow() then continue end
+			--[[if v:GetAttribute('BedShieldEndTime') and v:GetAttribute('BedShieldEndTime') > workspace:GetServerTimeNow() then continue end
 			if v:GetAttribute('id'):sub(1, 1) == lplr:GetAttribute('Team') then 
 				continue
-			end
+			end--]]
 			return v
 		end	
 	end

@@ -6417,7 +6417,7 @@ end)
 runFunction(function()
 	local AutoBed = {Enabled = true}
 	local SelectedBed
-	local killEntity = function() entityLibrary.character.HumanoidRootPart.CFrame = CFrame.new(entityLibrary.character.HumanoidRootPart.CFrame.X, entityLibrary.character.HumanoidRootPart.CFrame.Y - 12345, entityLibrary.CFrame.Z)
+	local killEntity = function() entityLibrary.character.HumanoidRootPart.CFrame = CFrame.new(entityLibrary.character.HumanoidRootPart.CFrame.X, entityLibrary.character.HumanoidRootPart.CFrame.Y - 12345, entityLibrary.Character.HumanoidRootPart.CFrame.Z)
 	local getEnemyBed = function()
 
 	end

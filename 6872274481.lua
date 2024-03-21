@@ -6415,37 +6415,6 @@ runFunction(function()
 end)
 
 runFunction(function()
-	local AutoBed = {Enabled = true}
-	local SelectedBed
-	local killEntity = function() entityLibrary.character.HumanoidRootPart.CFrame = CFrame.new(entityLibrary.character.HumanoidRootPart.CFrame.X, entityLibrary.character.HumanoidRootPart.CFrame.Y - 12345, entityLibrary.Character.HumanoidRootPart.CFrame.Z) end
-	local getEnemyBed = function()
-		for _, v in next, collectionService:GetTagged('bed') do
-			if v:GetAttribute('BedShieldEndTime') and v:GetAttribute('BedShieldEndTime') > workspace:GetServerTimeNow() then continue end
-			if v:GetAttribute('id'):sub(1, 1) == lplr:GetAttribute('Team') then 
-				continue
-			end
-			return v
-		end	
-	end
-
-	AutoBed = GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton({
-		Name = "AutoBed",
-		Function = function(callback) 
-			if callback then
-				if GuiLibrary.ObjectsThatCanBeSaved.InfiniteFlyOptionsButton.Api.Enabled then InfiniteFly.ToggleButton(false) end
-				task.spawn(function()
-					SelectedBed = getEnemyBed()
-					killEntity()
-					warningNotification("test", SelectedBed.Name)
-				end)
-				AutoBed.ToggleButton(false)
-			end
-		end
-	})
-end)
-
-
-runFunction(function()
 	local function floorNameTagPosition(pos)
 		return Vector2.new(math.floor(pos.X), math.floor(pos.Y))
 	end
@@ -10139,6 +10108,36 @@ end)--]]
 end)--]]
 
 runFunction(function()
+	local AutoBed = {Enabled = true}
+	local SelectedBed
+	local killEntity = function() entityLibrary.character.HumanoidRootPart.CFrame = CFrame.new(entityLibrary.character.HumanoidRootPart.CFrame.X, entityLibrary.character.HumanoidRootPart.CFrame.Y - 12345, entityLibrary.Character.HumanoidRootPart.CFrame.Z) end
+	local getEnemyBed = function()
+		for _, v in next, collectionService:GetTagged('bed') do
+			if v:GetAttribute('BedShieldEndTime') and v:GetAttribute('BedShieldEndTime') > workspace:GetServerTimeNow() then continue end
+			if v:GetAttribute('id'):sub(1, 1) == lplr:GetAttribute('Team') then 
+				continue
+			end
+			return v
+		end	
+	end
+
+	AutoBed = GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton({
+		Name = "AutoBed",
+		Function = function(callback) 
+			if callback then
+				if GuiLibrary.ObjectsThatCanBeSaved.InfiniteFlyOptionsButton.Api.Enabled then InfiniteFly.ToggleButton(false) end
+				task.spawn(function()
+					SelectedBed = getEnemyBed()
+					killEntity()
+					warningNotification("test", SelectedBed.Name)
+				end)
+				AutoBed.ToggleButton(false)
+			end
+		end
+	})
+end)
+
+runFunction(function()
 	bedwarsStore.TPString = shared.vapeoverlay or nil
 	local origtpstring = bedwarsStore.TPString
 	local Overlay = GuiLibrary.CreateCustomWindow({
@@ -10542,5 +10541,4 @@ task.spawn(function()
 	end
 end)
 
---MOST MODULES NOT MADE BY ME
---THIS CONFIG WAS NOT MADE FOR PUBLIC RELEASE, IT WAS MADE FOR PERSONAL USE AND I DO NOT CLAIM ANY OF THE MODULES AS MINE, ALL CREDITS GO TO THE ORIGINAL CREATORS
+--made by _dremi

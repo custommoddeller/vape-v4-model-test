@@ -10109,6 +10109,7 @@ end)--]]
 runFunction(function()
 	local SurpiseAttack = {Enabled = true}
 	local selectedPlayer
+	local supriseconnc
 	local killEntity = function() bedwars.ClientHandler:Get(bedwars.ResetRemote):SendToServer() end
 	local findPlayer = function()
 		return game.Players:GetPlayers()[math.random(1, #game.Players:GetPlayers())]
@@ -10122,9 +10123,11 @@ runFunction(function()
 				task.spawn(function()
 					selectedPlayer = findPlayer()
 					killEntity()
-					task.wait(1.2)
-					repeat task.wait() until entityLibrary.character.Humanoid:GetState() ~= Enum.HumanoidStateType.Dead
-					warningNotification("Found player", "Teleporting to "..selectedPlayer.Name, 5)
+					supriseconnc = lplr.characterAdded:Connect(function()
+						supriseconnc:Disconnect()
+						warningNotification("SupriseAttack", "Teleporting to "..selectedPlayer.Name, 5)
+						tweenService:Create(entityLibrary.character.HumanoidRootPart, TweenInfo.new(1, Enum.EasingStyle.Sine), {CFrame = CFrame.new(selectedPlayer.Character.HumanoidRootPart.Position + Vector3.new(0, 10, 0))})
+					end)
 				end)
 				SurpiseAttack.ToggleButton(false)
 			end

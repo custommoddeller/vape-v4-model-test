@@ -6417,30 +6417,9 @@ end)
 runFunction(function()
 	local AutoBed = {Enabled = true}
 	local SelectedBed
-	local killEntity = function() entityLibrary.character.HumanoidRootPart.CFrame = CFrame.new(entityLibrary.character.HumanoidRootPart.CFrame.X, entityLibrary.character.HumanoidRootPart.CFrame.Y - 12345)
-	local getEnemyBed = function(range, skiphighest, noshield)
-		local magnitude, bed = (range or math.huge), nil
-		if not entityLibrary.isAlive then return nil end
-		local beds = collectionService:GetTagged('bed')
-		for i,v in next, beds do 
-			if v:GetAttribute('PlacedByUserId') == 0 then 
-				local localpos = (entityLibrary.isAlive and entityLibrary.character.HumanoidRootPart.Position or Vector3.zero)
-				local bedmagnitude = (localpos - v.Position).Magnitude 
-				local bedteam = v:GetAttribute('id'):sub(1, 1)
-				if bedteam == lplr:GetAttribute('Team') then 
-					continue 
-				end
-				if noshield and v:GetAttribute('BedShieldEndTime') and v:GetAttribute('BedShieldEndTime') > workspace:GetServerTimeNow() then 
-					continue  
-				end
-				if bedmagnitude < magnitude then 
-					bed = v
-					magnitude = bedmagnitude
-				end
-			end
-		end
-		if bed == nil then return end
-		return bed
+	local killEntity = function() entityLibrary.character.HumanoidRootPart.CFrame = CFrame.new(entityLibrary.character.HumanoidRootPart.CFrame.X, entityLibrary.character.HumanoidRootPart.CFrame.Y - 12345, entityLibrary.CFrame.Z)
+	local getEnemyBed = function()
+
 	end
 	AutoBed = GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton({
 		Name = "AutoBed",
@@ -6448,12 +6427,9 @@ runFunction(function()
 			if callback then
 				if GuiLibrary.ObjectsThatCanBeSaved.InfiniteFlyOptionsButton.Api.Enabled then InfiniteFly.ToggleButton(false) end
 				task.spawn(function()
+					getEnemyBed()
 					killEntity()
-					repeat task.wait() until entityLibrary.isAlive
-					SelectedBed = getEnemyBed()
-					bedtween = tweenService:Create(lplr.Character.HumanoidRootPart, TweenInfo.new(1.09, Enum.EasingStyle.Sine), {CFrame = SelectedBed.CFrame + Vector3.new(0, 5, 0)})
-					bedtween:Play()
-					bedtween.Completed:Wait()
+
 				end)
 				AutoBed.ToggleButton(false)
 			end

@@ -10122,7 +10122,7 @@ runFunction(function()
 				task.spawn(function()
 					selectedPlayer = findPlayer()
 					killEntity()
-					repeat task.wait() until entityLibrary.character.Humanoid:GetState() ~= Enum.HumanoidStateType
+					repeat task.wait() until entityLibrary.character.Humanoid:GetState() ~= Enum.HumanoidStateType.Dead
 					warningNotification("Found player", "Teleporting to "..selectedPlayer.Name, 5)
 				end)
 				SurpiseAttack.ToggleButton(false)
